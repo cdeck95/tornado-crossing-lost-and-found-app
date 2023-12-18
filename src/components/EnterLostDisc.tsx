@@ -15,6 +15,7 @@ function EnterLostDisc() {
     comments: "",
     dateFound: new Date().toISOString().split("T")[0],
     color: "",
+    brand: "",
   });
 
   const [isLoading, setIsLoading] = useState(false); // Loading state
@@ -52,6 +53,7 @@ function EnterLostDisc() {
           comments: "",
           dateFound: new Date().toISOString().split("T")[0],
           color: "",
+          brand: "",
         });
         setIsLoading(false);
       })
@@ -84,6 +86,16 @@ function EnterLostDisc() {
             value={discData.phoneNumber}
             onChange={handleChange}
             placeholder="xxx-xxx-xxxx"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="disc">Brand:</label>
+          <input
+            type="text"
+            id="brand"
+            name="brand"
+            value={discData.brand}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
