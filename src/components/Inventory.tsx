@@ -107,10 +107,10 @@ function Inventory() {
         const filteredInventory = sortedInventory.filter((disc: Disc) => {
           const isMatch =
             disc.phoneNumber.includes(searchQuery) ||
-            disc.disc.includes(searchQuery) ||
-            disc.name.includes(searchQuery) ||
-            disc.brand?.includes(searchQuery) ||
-            disc.comments?.includes(searchQuery);
+            disc.disc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            disc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            disc.brand?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            disc.comments?.toLowerCase().includes(searchQuery.toLowerCase());
 
           // Check if the user wants to see past deadlines and if the pickupDeadline is in the past
           if (showPastDeadlines) {
