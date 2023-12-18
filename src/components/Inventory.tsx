@@ -203,7 +203,7 @@ function Inventory() {
   //   setShowPastDeadlines(!showPastDeadlines);
   // };
 
-  const markAsFiveDollarBox = (discId: string, course: string) => {
+  const listForSale = (discId: string, course: string) => {
     setIsLoading(true);
     console.log("Marking as for sale");
 
@@ -772,7 +772,7 @@ function Inventory() {
                                     <button
                                       className="button"
                                       onClick={() =>
-                                        markAsFiveDollarBox(
+                                        listForSale(
                                           disc.id!.toString(),
                                           "Stafford Woods"
                                         )
