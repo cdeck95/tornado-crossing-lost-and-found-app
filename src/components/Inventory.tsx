@@ -751,33 +751,42 @@ function Inventory() {
                               <CircularProgress />
                             </div>
                           ) : (
-                            <div>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                width: "100%",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
                               {disc.id !== claimedDisc ? (
-                                // Check if the pickup deadline is in the past
-                                new Date(disc.pickupDeadline!) < new Date() ? (
-                                  <button
-                                    className="button"
-                                    onClick={() =>
-                                      markAsFiveDollarBox(disc.id!.toString())
-                                    }
-                                  >
-                                    Move to $5 Box
-                                  </button>
-                                ) : (
-                                  // <button className="button" onClick={() => markAsClaimed(disc.id!.toString())}>
-                                  //   Mark as Claimed
-                                  // </button>
+                                <div>
+                                  {/* Check if the pickup deadline is in the past */}
+                                  {new Date(disc.pickupDeadline!) <
+                                    new Date() && (
+                                    <button
+                                      className="button"
+                                      onClick={() =>
+                                        markAsFiveDollarBox(disc.id!.toString())
+                                      }
+                                    >
+                                      Move to $5 Box
+                                    </button>
+                                  )}
+
                                   <button
                                     className="button"
                                     onClick={() =>
                                       markAsClaimed(disc.id!.toString())
                                     }
+                                    style={{ marginLeft: "10px" }}
                                   >
                                     Mark as Claimed
                                   </button>
-                                )
+                                </div>
                               ) : null}
-                            </div>
+                            </Box>
                           )}
                           {successMessage && disc.id === claimedDisc && (
                             <div className="success-message">
