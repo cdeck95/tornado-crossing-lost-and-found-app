@@ -116,6 +116,7 @@ function Inventory() {
             disc.brand?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             disc.comments?.toLowerCase().includes(searchQuery.toLowerCase());
 
+          return isMatch;
           // Check if the user wants to see past deadlines and if the pickupDeadline is in the past
           // if (showPastDeadlines) {
           //   return (
@@ -202,13 +203,17 @@ function Inventory() {
   //   setShowPastDeadlines(!showPastDeadlines);
   // };
 
-  const markAsFiveDollarBox = (discId: string) => {
+  const markAsFiveDollarBox = (discId: string, course: string) => {
     setIsLoading(true);
     console.log("Marking as $5 Box");
 
     // Make an API call to mark the disc as a $5 Box
     axios
-      .put(`${API_BASE_URL}/api/change-status/${discId}`)
+      .put(`${API_BASE_URL}/api/change-status/${discId}`, null, {
+        params: {
+          course: course,
+        },
+      })
       .then((response) => {
         //console.log('Disc marked as $5 Box:', response.data);
         setIsLoading(false);
@@ -768,7 +773,10 @@ function Inventory() {
                                     <button
                                       className="button"
                                       onClick={() =>
-                                        markAsFiveDollarBox(disc.id!.toString())
+                                        markAsFiveDollarBox(
+                                          disc.id!.toString(),
+                                          "Stafford Woods"
+                                        )
                                       }
                                     >
                                       Move to $5 Box
