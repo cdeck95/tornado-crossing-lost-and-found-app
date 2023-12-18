@@ -41,7 +41,7 @@ function Inventory() {
   const [sortOption, setSortOption] = useState<keyof Disc>("pickupDeadline"); // Set initial sort option
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc"); // Set initial sort direction to DESC
   const [expandedRows, setExpandedRows] = useState<RowId[]>([]);
-  const [showPastDeadlines, setShowPastDeadlines] = useState(false);
+  // const [showPastDeadlines, setShowPastDeadlines] = useState(false);
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const [refreshing, setRefreshing] = useState(false);
@@ -117,15 +117,15 @@ function Inventory() {
             disc.comments?.toLowerCase().includes(searchQuery.toLowerCase());
 
           // Check if the user wants to see past deadlines and if the pickupDeadline is in the past
-          if (showPastDeadlines) {
-            return (
-              isMatch &&
-              (!disc.pickupDeadline ||
-                new Date(disc.pickupDeadline) < new Date())
-            );
-          } else {
-            return isMatch;
-          }
+          // if (showPastDeadlines) {
+          //   return (
+          //     isMatch &&
+          //     (!disc.pickupDeadline ||
+          //       new Date(disc.pickupDeadline) < new Date())
+          //   );
+          // } else {
+          //   return isMatch;
+          // }
         });
 
         setFilteredInventory(filteredInventory);
@@ -137,7 +137,7 @@ function Inventory() {
 
   useEffect(() => {
     getInventory("Stafford Woods");
-  }, [searchQuery, showPastDeadlines, sortDirection, sortOption]);
+  }, [searchQuery, sortDirection, sortOption]);
 
   const markAsClaimed = (discId: string) => {
     setIsLoading(true); // Set loading state to true
@@ -198,9 +198,9 @@ function Inventory() {
   //   setSortDirection(selectedDirection);
   // };
 
-  const toggleShowPastDeadlines = () => {
-    setShowPastDeadlines(!showPastDeadlines);
-  };
+  // const toggleShowPastDeadlines = () => {
+  //   setShowPastDeadlines(!showPastDeadlines);
+  // };
 
   const markAsFiveDollarBox = (discId: string) => {
     setIsLoading(true);
