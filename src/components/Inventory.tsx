@@ -52,7 +52,7 @@ function Inventory() {
   // }, []);
 
   const handleRefresh = async () => {
-    getInventory();
+    getInventory("Stafford Woods");
   };
 
   const toggleRow = (rowId: RowId) => {
@@ -72,7 +72,7 @@ function Inventory() {
     return dateUTC.toFormat("yyyy-MM-dd");
   };
 
-  const getInventory = (course = "Stafford Woods") => {
+  const getInventory = (course: string) => {
     axios
       .get(`${API_BASE_URL}/api/inventory`, {
         params: {
@@ -136,7 +136,7 @@ function Inventory() {
   };
 
   useEffect(() => {
-    getInventory();
+    getInventory("Stafford Woods");
   }, [searchQuery, showPastDeadlines, sortDirection, sortOption]);
 
   const markAsClaimed = (discId: string) => {
