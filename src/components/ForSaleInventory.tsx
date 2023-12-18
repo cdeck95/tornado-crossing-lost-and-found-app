@@ -771,7 +771,7 @@ function ForSaleInventory() {
                                   {new Date(disc.pickupDeadline!) <
                                     new Date() && (
                                     <button
-                                      className="button"
+                                      className="inventory-button"
                                       onClick={() =>
                                         markAsSold(
                                           disc.id!.toString(),
@@ -784,7 +784,7 @@ function ForSaleInventory() {
                                   )}
 
                                   <button
-                                    className="button"
+                                    className="inventory-button"
                                     onClick={() =>
                                       markAsClaimed(disc.id!.toString())
                                     }

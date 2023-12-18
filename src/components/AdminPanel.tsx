@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import EnterLostDisc from "./EnterLostDisc";
 import Inventory from "./Inventory";
@@ -12,26 +12,59 @@ import {
   useTheme,
 } from "@mui/material"; // Import Button and ButtonGroup from MUI
 import ExpiredPickups from "./ExpiredPickups";
+import Cookies from "js-cookie";
+import CryptoJS from "crypto-js";
 
 function AdminPanel() {
+  const REACT_APP_ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
   const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
   const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
 
+  const hashPassword = (password: string) => {
+    return CryptoJS.SHA256(password).toString();
+  };
+
+  const hashedAdminPassword: string = hashPassword(
+    REACT_APP_ADMIN_PASSWORD!
+  ).toString();
+
   const switchTab = (tabName: string) => {
     setActiveTab(tabName);
   };
+
+  useEffect(() => {
+    checkCookie();
+  }, []);
 
   // Function to handle password submission
   const handlePasswordSubmit = () => {
     const enteredPassword = prompt("Please enter the password:"); // Prompt for the password
 
-    if (enteredPassword === "StaffordLostAndFound2023") {
+    if (hashPassword(enteredPassword!) === hashedAdminPassword) {
       setIsPasswordEntered(true); // Set the flag to true if the password is correct
+      Cookies.set("admin_auth", hashedAdminPassword, { expires: 7 }); // expires in 7 days
     } else {
       alert("Incorrect password. Please try again.");
     }
+  };
+
+  // Function to check the hashed password from the cookie
+  const checkCookie = () => {
+    const hashedPasswordInCookie = Cookies.get("admin_auth");
+    if (hashedPasswordInCookie) {
+      if (hashedAdminPassword === hashedPasswordInCookie!) {
+        setIsPasswordEntered(true);
+      } else {
+        setIsPasswordEntered(false);
+      }
+    }
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("admin_auth");
+    setIsPasswordEntered(false);
   };
 
   return (

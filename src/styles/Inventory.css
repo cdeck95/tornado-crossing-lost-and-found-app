@@ -75,22 +75,20 @@
 @media (max-width: 768px) {
   .table-header,
   .table-cell {
-      padding: 4px;
-      font-size: 14px;
+    padding: 4px;
+    font-size: 14px;
   }
 
   .search-bar {
-      margin-bottom: 10px;
+    margin-bottom: 10px;
   }
 
   .search-bar input {
-      padding: 6px;
+    padding: 6px;
   }
 }
 
-
-
-.button{
+.inventory-button {
   display: inline-block;
   outline: 0;
   cursor: pointer;
@@ -101,12 +99,17 @@
   min-width: 24px;
   color: #ffffff;
   background: #008060;
+  border: 1px solid #ffffff;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
 }
 
-.button:hover {
-  background: #006e52;
+.inventory-button:hover {
+  color: #006e52;
+  background: #ffffff;
+  border: 1px solid #008060;
+  cursor: pointer;
 }
 
 /* .button:active{
@@ -150,7 +153,3 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 }
-
-
-
-

@@ -770,7 +770,7 @@ function Inventory() {
                                   {new Date(disc.pickupDeadline!) <
                                     new Date() && (
                                     <button
-                                      className="button"
+                                      className="inventory-button"
                                       onClick={() =>
                                         listForSale(
                                           disc.id!.toString(),
@@ -783,7 +783,7 @@ function Inventory() {
                                   )}
 
                                   <button
-                                    className="button"
+                                    className="inventory-button"
                                     onClick={() =>
                                       markAsClaimed(disc.id!.toString())
                                     }

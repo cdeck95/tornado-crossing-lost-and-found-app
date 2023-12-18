@@ -1,56 +1,108 @@
 /* EnterLostDisc.css */
 
 .lost-disc-container {
-    max-width: 400px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    margin-bottom: 20px;
+  max-width: 400px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.success-message {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.button {
+  width: 175px; /* Large square size */
+  height: 175px;
+  border-radius: 10px; /* Rounded corners */
+  margin: 10px;
+  padding: 10px !important;
+  font-size: 16px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #ffffff;
+  background: #008060;
+  border: 1px solid #ffffff;
+}
+
+.button:hover {
+  color: #006e52;
+  background: #ffffff;
+  border: 1px solid #008060;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  /* Adjust for mobile */
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .form-group {
-    margin-bottom: 20px;
+}
+
+@media screen and (min-width: 601px) {
+  /* Adjust for larger screens */
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    text-align: left;
-  }
-  
-  input {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 16px;
-  }
-  
-  .submit-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .success-message {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 3px;
-    background-color: #d4edda;
-    color: #155724;
-  }
+}
+
+.button-icon {
+  font-size: 48px; /* Larger icon size */
+  width: 70% !important;
+  height: 70% !important;
+  margin-bottom: 5px;
+}
+
+.button-text {
+  text-align: center; /* Center the text */
+}

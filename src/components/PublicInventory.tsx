@@ -471,7 +471,7 @@ function PublicInventory() {
                 <div><CircularProgress/></div>
                 ) : (
                     <div>
-                        {disc.id!==claimedDisc && <button className="button" onClick={() => markAsClaimed(disc.id!.toString())}>Mark as Claimed</button>}
+                        {disc.id!==claimedDisc && <button className="inventory-button" onClick={() => markAsClaimed(disc.id!.toString())}>Mark as Claimed</button>}
                     </div>
                     )}
                 {successMessage && disc.id===claimedDisc && <div className="success-message">{successMessage}</div>}
