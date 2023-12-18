@@ -54,7 +54,7 @@ const FAQData: FAQItem[] = [
   {
     question: "How do I know when my disc is added?",
     answer:
-      "If your disc has a visible phone number written on it, you will be notified via text. Once a day, at 12pm EST, the system sends a text for every new disc added to the inventory.",
+      "If your disc has a visible phone number written on it, you will be notified via text. Once a day, the system sends a text for every new disc added to the inventory.",
   },
   {
     question: "Can I report my disc as lost?",
@@ -75,7 +75,7 @@ const FAQData: FAQItem[] = [
   {
     question: "How do I pick up my disc?",
     answer:
-      "To pick up your disc, contact one of our volunteers via text to coordinate a time to retrieve it. A min of 12 hours lead-time is required. Do not just show up at the course and expect to get your disc back. You can reach out to Steve Finger @ 609-280-7999 or Dan Kelly @ 856-628-1436 to schedule a pickup window.",
+      "To pick up your disc, contact one of our volunteers via text to coordinate a time to retrieve it. A min of 12 hours lead-time is required. Do not just show up at the course and expect to get your disc back. You can reach out to TBD @ TBD to schedule a pickup window.",
   },
   {
     question: "What should I do if I'm unable to collect my disc?",
