@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import EnterLostDisc from "./EnterLostDisc";
 import Inventory from "./Inventory";
+import ForSaleInventory from "./ForSaleInventory";
 import "../styles/App.css";
 import {
   Button,
@@ -61,6 +62,13 @@ function AdminPanel() {
             >
               Inventory
             </Button>
+            <Button
+              onClick={() => switchTab("forSaleInventory")}
+              color={activeTab === "forSaleInventory" ? "primary" : "inherit"}
+              className={activeTab === "forSaleInventory" ? "active" : ""}
+            >
+              For Sale
+            </Button>
           </ButtonGroup>
         </nav>
       </header>
@@ -68,7 +76,7 @@ function AdminPanel() {
         <main className="container">
           {activeTab === "enterLostDisc" && <EnterLostDisc />}
           {activeTab === "inventory" && <Inventory />}
-          {/* {activeTab === 'expired' && <ExpiredPickups />} */}
+          {activeTab === "forSaleInventory" && <ForSaleInventory />}
         </main>
       ) : (
         // Render password form if the password is not entered

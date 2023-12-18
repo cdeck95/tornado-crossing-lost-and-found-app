@@ -24,6 +24,7 @@ export interface Disc {
   color: string;
   pickupDeadline?: string | null;
   brand?: string | null;
+  dateSold?: string | null;
 }
 
 export const API_BASE_URL = "https://lost-and-found-api-gl8z.onrender.com"; //production URL
