@@ -73,8 +73,13 @@ function PublicInventory() {
   }
 
   useEffect(() => {
+    const course = "Stafford Woods";
     axios
-      .get(`${API_BASE_URL}/api/inventory`)
+      .get(`${API_BASE_URL}/api/inventory`, {
+        params: {
+          course: course,
+        },
+      })
       .then((response) => {
         // Convert UTC timestamps to EST
         const convertedInventory = response.data.map((disc: Disc) => ({
