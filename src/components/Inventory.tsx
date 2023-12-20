@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_BASE_URL, Disc } from "../App";
 import "../styles/Inventory.css"; // Import the CSS file
 import { DateTime } from "luxon";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   CircularProgress,
@@ -27,6 +28,7 @@ import { SelectChangeEvent } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import BackToTopButton from "./BackToTopButton";
 import PullToRefresh from "react-simple-pull-to-refresh";
+import DeleteConfirmationPopup from "./DeleteConfirmationPopup";
 
 // Define a type for row IDs, assuming it's a number
 type RowId = number;
@@ -37,6 +39,8 @@ function Inventory() {
   const [filteredInventory, setFilteredInventory] = useState(inventory); // Initialize with inventory data
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [deleteSuccessMessage, setDeleteSuccessMessage] = useState("");
+  const [deleteFailureMessage, setDeleteFailureMessage] = useState("");
   const [claimedDisc, setClaimedDisc] = useState<number>(0); // Provide the type 'Disc | null'
   const [sortOption, setSortOption] = useState<keyof Disc>("pickupDeadline"); // Set initial sort option
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc"); // Set initial sort direction to DESC
@@ -254,6 +258,37 @@ function Inventory() {
     );
   };
 
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
+  const handleDeleteClick = () => {
+    console.log("Delete clicked");
+    setShowDeletePopup(true);
+  };
+
+  const handleClose = () => {
+    setShowDeletePopup(false);
+  };
+
+  const handleConfirmDelete = (disc: Disc) => {
+    setIsLoading(true);
+    console.log("Deleting disc:", disc);
+    axios
+      .delete(`${API_BASE_URL}/api/delete-disc/${disc.id}`)
+      .then((response) => {
+        console.log("Disc deleted:", response.data);
+        setDeleteSuccessMessage("Disc deleted successfully");
+        setIsLoading(false);
+        handleClose(); // Close the popup after successful deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting disc:", error);
+        console.log("Error deleting disc:", error.response.data.message);
+        setDeleteFailureMessage("Error deleting Disc");
+        setIsLoading(false);
+        handleClose(); // Close the popup after an error
+      });
+  };
+
   return (
     <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
       <div className="page-container">
@@ -382,6 +417,21 @@ function Inventory() {
                         {/* Use appropriate colspan */}
                         <div>
                           {/* Display all fields related to the disc here */}
+                          {successMessage && disc.id === claimedDisc && (
+                            <div className="success-message">
+                              {successMessage}
+                            </div>
+                          )}
+                          {deleteSuccessMessage && (
+                            <div className="success-message">
+                              {deleteSuccessMessage}
+                            </div>
+                          )}
+                          {deleteFailureMessage && (
+                            <div className="failure-message">
+                              {deleteFailureMessage}
+                            </div>
+                          )}
                           {editedDiscID === disc.id ? (
                             <SaveOutlinedIcon
                               sx={{ cursor: "pointer", marginRight: "10px" }}
@@ -393,6 +443,14 @@ function Inventory() {
                               onClick={() => startEditing(disc)}
                             ></EditOutlinedIcon>
                           )}
+                          <DeleteIcon
+                            onClick={() => handleDeleteClick()}
+                            sx={{
+                              marginLeft: "20px",
+                              marginTop: "5px",
+                              cursor: "pointer",
+                            }}
+                          />
                           <p>
                             <strong>ID:</strong> {disc.id}
                           </p>
@@ -795,10 +853,14 @@ function Inventory() {
                               ) : null}
                             </Box>
                           )}
-                          {successMessage && disc.id === claimedDisc && (
-                            <div className="success-message">
-                              {successMessage}
-                            </div>
+
+                          {showDeletePopup && (
+                            <DeleteConfirmationPopup
+                              disc={disc}
+                              open={showDeletePopup}
+                              onClose={handleClose}
+                              onConfirm={() => handleConfirmDelete(disc)}
+                            />
                           )}
                         </div>
                       </td>

@@ -55,6 +55,15 @@ input {
   color: #155724;
 }
 
+.failure-message {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: lightgray;
+  color: red;
+  font-weight: bold;
+}
+
 .button {
   width: 175px; /* Large square size */
   height: 175px;

@@ -28,8 +28,9 @@ export interface Disc {
 }
 
 export const API_BASE_URL = "https://api.discrescuenetwork.com"; //production URL
-//export const API_BASE_URL = "https://lost-and-found-api-gl8z.onrender.com"; //OLD production URL
 //export const API_BASE_URL = "http://127.0.0.1:3001"; // local testing
+
+//export const API_BASE_URL = "https://lost-and-found-api-gl8z.onrender.com"; //OLD production URL
 
 function App() {
   const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
