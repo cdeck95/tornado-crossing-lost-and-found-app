@@ -73,8 +73,10 @@ function AdminPanel() {
         <Typography
           sx={{
             color: "white",
+            padding: "5px",
+            margin: "0px",
             fontSize: isMobile ? "2rem" : "3rem",
-            marginBottom: "10px",
+            marginBottom: "15px",
           }}
         >
           Stafford Woods Lost and Found
