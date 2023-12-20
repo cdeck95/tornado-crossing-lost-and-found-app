@@ -85,6 +85,7 @@ function AdminPanel() {
               onClick={() => switchTab("enterLostDisc")}
               color={activeTab === "enterLostDisc" ? "primary" : "inherit"}
               className={activeTab === "enterLostDisc" ? "active" : ""}
+              sx={{ fontSize: isMobile ? ".75rem" : "1rem" }}
             >
               Enter Lost Disc
             </Button>
@@ -92,6 +93,7 @@ function AdminPanel() {
               onClick={() => switchTab("inventory")}
               color={activeTab === "inventory" ? "primary" : "inherit"}
               className={activeTab === "inventory" ? "active" : ""}
+              sx={{ fontSize: isMobile ? ".75rem" : "1rem" }}
             >
               Inventory
             </Button>
@@ -99,6 +101,7 @@ function AdminPanel() {
               onClick={() => switchTab("forSaleInventory")}
               color={activeTab === "forSaleInventory" ? "primary" : "inherit"}
               className={activeTab === "forSaleInventory" ? "active" : ""}
+              sx={{ fontSize: isMobile ? ".75rem" : "1rem" }}
             >
               For Sale
             </Button>

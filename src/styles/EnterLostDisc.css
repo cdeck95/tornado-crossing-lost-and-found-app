@@ -71,7 +71,9 @@ input {
   border: 1px solid #ffffff;
 }
 
-.button:hover {
+.button:hover,
+.button:focus,
+.button:active {
   color: #006e52;
   background: #ffffff;
   border: 1px solid #008060;
@@ -82,8 +84,17 @@ input {
   /* Adjust for mobile */
   .button-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
     align-items: center;
+    margin-bottom: 1.5em;
+  }
+
+  .button {
+    width: 125px;
+    height: 125px;
+    font-size: 0.85rem !important;
   }
 }
 
@@ -93,6 +104,14 @@ input {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .button {
+    width: 150px;
+    height: 150px;
+    font-size: 0.85rem !important;
   }
 }
 
