@@ -35,10 +35,10 @@ const DeleteConfirmationPopup: React.FC<DeleteConfirmationPopupProps> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} color="primary" autoFocus>
           Cancel
         </Button>
-        <Button onClick={onConfirm} color="primary" autoFocus>
+        <Button onClick={onConfirm} color="error">
           Confirm
         </Button>
       </DialogActions>
