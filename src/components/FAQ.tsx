@@ -75,7 +75,7 @@ const FAQData: FAQItem[] = [
   {
     question: "How do I pick up my disc?",
     answer:
-      "To pick up your disc, contact one of our volunteers via text to coordinate a time to retrieve it. A min of 12 hours lead-time is required. Do not just show up at the course and expect to get your disc back. You can reach out to TBD @ TBD to schedule a pickup window.",
+      "To pick up your disc, contact one of our volunteers via text to coordinate a time to retrieve it. A min of 12 hours lead-time is required. Do not just show up at the course and expect to get your disc back. You can reach out to Andrew Katz @ 267-614-8364 to schedule a pickup window.",
   },
   {
     question: "What should I do if I'm unable to collect my disc?",
