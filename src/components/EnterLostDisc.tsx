@@ -232,17 +232,19 @@ function EnterLostDisc() {
     setErrorMessage(""); // Clear error message
     setIsLoading(true); // Set loading to true when the request is initiated
 
-    const formData = new FormData();
-    Object.entries(discData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    if (frontImage) formData.append("frontImage", frontImage);
-    if (backImage) formData.append("backImage", backImage);
+    // const formData = new FormData();
+    // Object.entries(discData).forEach(([key, value]) => {
+    //   formData.append(key, value);
+    // });
+    // if (frontImage) formData.append("frontImage", frontImage);
+    // if (backImage) formData.append("backImage", backImage);
 
+    // axios
+    //   .post(`${API_BASE_URL}/api/found-discs`, formData, {
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   })
     axios
-      .post(`${API_BASE_URL}/api/found-discs`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+      .post(`${API_BASE_URL}/api/found-discs`, discData)
       .then((response) => {
         console.log("Disc added:", response.data);
 
@@ -441,10 +443,10 @@ function EnterLostDisc() {
             className={`submit-button ${isLoading ? "loading" : ""}`}
           >
             {isLoading ? <CircularProgress /> : "Submit"}
-            {successMessage && (
-              <p className="success-message">{successMessage}</p>
-            )}
           </button>
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
         </form>
       )}
     </div>
