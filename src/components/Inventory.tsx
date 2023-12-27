@@ -428,7 +428,7 @@ function Inventory() {
                             </div>
                           )}
                           {deleteFailureMessage && (
-                            <div className="failure-message">
+                            <div className="error-message">
                               {deleteFailureMessage}
                             </div>
                           )}

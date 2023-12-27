@@ -9,3 +9,94 @@
   transform: translate(-50%, -50%); /* Center the circle */
   pointer-events: none; /* Allows the camera feed to be clicked through the circle */
 }
+
+.webcam {
+  width: 100%;
+  max-width: 100%;
+  min-width: 225px;
+  height: auto;
+  max-height: 100%;
+  min-height: 225px;
+  object-fit: cover;
+  position: relative;
+}
+
+.button-blue {
+  width: 175px; /* Large square size */
+  height: 175px;
+  border-radius: 10px; /* Rounded corners */
+  margin: 10px;
+  padding: 10px !important;
+  font-size: 16px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #ffffff;
+  background: blue;
+  border: 1px solid #ffffff;
+}
+
+.button-blue:hover,
+.button-blue:focus,
+.button-blue:active {
+  color: #006e52;
+  background: #ffffff;
+  border: 1px solid blue;
+  cursor: pointer;
+}
+
+.button-switch {
+  width: 175px; /* Large square size */
+  height: 175px;
+  border-radius: 10px; /* Rounded corners */
+  margin: 10px;
+  padding: 10px !important;
+  font-size: 16px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #ffffff;
+  background: grey;
+  border: 1px solid #ffffff;
+}
+
+.button-switch:hover,
+.button-switch:focus,
+.button-switch:active {
+  color: #006e52;
+  background: #ffffff;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  /* Adjust for mobile */
+  .button-blue {
+    width: 125px;
+    height: 125px;
+    font-size: 0.85rem !important;
+  }
+
+  .button-switch {
+    width: 125px;
+    height: 125px;
+    font-size: 0.85rem !important;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  /* Adjust for larger screens */
+  .button-blue {
+    width: 150px;
+    height: 150px;
+    font-size: 0.85rem !important;
+  }
+
+  .button-switch {
+    width: 150px;
+    height: 150px;
+    font-size: 0.85rem !important;
+  }
+}

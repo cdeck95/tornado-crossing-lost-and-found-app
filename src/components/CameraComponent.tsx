@@ -1,28 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
-import { ImageAnnotatorClient } from "@google-cloud/vision";
-import { detectText } from "./textDetectionService";
+import axios from "axios";
 import "../styles/CameraComponent.css";
+import "../styles/EnterLostDisc.css"; // Import the CSS file
+import { API_BASE_URL } from "../App";
 
-const CameraComponent = () => {
+interface CameraComponentProps {
+  onCapture: (imageData: string, side: string) => void;
+  side: string;
+  switchToManual: () => void;
+}
+
+const CameraComponent: React.FC<CameraComponentProps> = ({
+  onCapture,
+  side,
+  switchToManual,
+}) => {
   const webcamRef = useRef<Webcam>(null); // Use a generic type for better type checking
   const intervalRef = useRef<number | null>(null);
-
   const [isDark, setIsDark] = useState(false); // State to track lighting condition
 
-  const capture = async () => {
+  const capture = () => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
+      console.log("Image:", imageSrc);
       if (imageSrc) {
-        await detectText(imageSrc);
-      } else {
-        console.error("Image source is null.");
+        onCapture(imageSrc, side);
       }
     }
   };
 
   const checkImage = () => {
-    const thresholdBrightness = 128; // Define thresholdBrightness as per your need
+    const thresholdBrightness = 110; // Define thresholdBrightness as per your need
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
 
@@ -53,6 +62,9 @@ const CameraComponent = () => {
         }
         const averageBrightness = totalBrightness / (imageData.data.length / 4);
 
+        console.log("Average brightness:", averageBrightness);
+        console.log("Is dark:", averageBrightness < thresholdBrightness);
+
         // Check if the image is well-lit
         if (averageBrightness < thresholdBrightness) {
           setIsDark(true); // Update state if the image is dark
@@ -77,23 +89,68 @@ const CameraComponent = () => {
   }, []);
 
   return (
-    <div style={{ position: "relative" }}>
-      <Webcam ref={webcamRef} screenshotFormat="image/jpeg" />
-      <button onClick={capture}>Capture photo</button>
-      <div className="circle-guide"></div>
-      {isDark && (
-        <div
+    <div>
+      <div style={{ position: "relative" }}>
+        <Webcam
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          className="webcam"
+        />
+        <div className="circle-guide"></div>
+        {isDark && (
+          <div
+            style={{
+              position: "absolute",
+              top: "10px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              color: "white",
+            }}
+          >
+            Please try to get better lighting.
+          </div>
+        )}
+      </div>
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "row",
+          margin: "auto",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button
+          onClick={capture}
+          className="button-blue"
           style={{
-            position: "absolute",
-            top: "10px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            color: "white",
+            height: "50px",
+            width: "100%",
           }}
         >
-          Please try to get better lighting.
-        </div>
-      )}
+          Capture {side} photo
+        </button>
+        <button
+          onClick={switchToManual}
+          className="button"
+          style={{
+            height: "50px",
+            width: "100%",
+          }}
+        >
+          Done Captures
+        </button>
+        {/* <button
+          onClick={toggleSide}
+          className="button-switch"
+          style={{
+            height: "50px",
+          }}
+        >
+          Switch to {side === "front" ? "Back" : "Front"}
+        </button> */}
+      </div>
     </div>
   );
 };
