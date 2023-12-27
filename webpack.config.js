@@ -11,7 +11,7 @@ const stylesHandler = "style-loader";
 const config = {
   entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build"),
   },
   plugins: [
     // new HtmlWebpackPlugin({
