@@ -78,7 +78,7 @@ function Inventory() {
 
   const getInventory = (course: string) => {
     axios
-      .get(`${API_BASE_URL}/api/inventory`, {
+      .get(`${API_BASE_URL}/inventory`, {
         params: {
           course: course,
         },
@@ -148,7 +148,7 @@ function Inventory() {
     setIsLoading(true); // Set loading state to true
 
     axios
-      .put(`${API_BASE_URL}/api/mark-claimed/${discId}`)
+      .put(`${API_BASE_URL}/mark-claimed/${discId}`)
       .then((response) => {
         //console.log('Disc marked as claimed:', response.data);
         setIsLoading(false); // Set loading state to false
@@ -177,7 +177,7 @@ function Inventory() {
   const saveEditedDisc = (editedDiscIn: Disc) => {
     if (editedDiscIn) {
       axios
-        .put(`${API_BASE_URL}/api/edit-disc/${editedDiscIn.id}`, editedDiscIn)
+        .put(`${API_BASE_URL}/edit-disc/${editedDiscIn.id}`, editedDiscIn)
         .then((response) => {
           //console.log('Disc updated:', response.data);
           // Refresh the inventory or handle success as needed
@@ -213,7 +213,7 @@ function Inventory() {
 
     // Make an API call to mark the disc as for sale
     axios
-      .put(`${API_BASE_URL}/api/change-status/${discId}`, null, {
+      .put(`${API_BASE_URL}/change-status/${discId}`, null, {
         params: {
           course: course,
         },
@@ -273,7 +273,7 @@ function Inventory() {
     setIsLoading(true);
     console.log("Deleting disc:", disc);
     axios
-      .delete(`${API_BASE_URL}/api/delete-disc/${disc.id}`)
+      .delete(`${API_BASE_URL}/delete-disc/${disc.id}`)
       .then((response) => {
         console.log("Disc deleted:", response.data);
         setDeleteSuccessMessage("Disc deleted successfully");

@@ -75,7 +75,7 @@ function ForSaleInventory() {
 
   const getForSaleInventory = (course: string) => {
     axios
-      .get(`${API_BASE_URL}/api/for-sale-inventory`, {
+      .get(`${API_BASE_URL}/for-sale-inventory`, {
         params: {
           course: course,
         },
@@ -145,7 +145,7 @@ function ForSaleInventory() {
     setIsLoading(true); // Set loading state to true
 
     axios
-      .put(`${API_BASE_URL}/api/mark-claimed/${discId}`)
+      .put(`${API_BASE_URL}/mark-claimed/${discId}`)
       .then((response) => {
         //console.log('Disc marked as claimed:', response.data);
         setIsLoading(false); // Set loading state to false
@@ -174,7 +174,7 @@ function ForSaleInventory() {
   const saveEditedDisc = (editedDiscIn: Disc) => {
     if (editedDiscIn) {
       axios
-        .put(`${API_BASE_URL}/api/edit-disc/${editedDiscIn.id}`, editedDiscIn)
+        .put(`${API_BASE_URL}/edit-disc/${editedDiscIn.id}`, editedDiscIn)
         .then((response) => {
           //console.log('Disc updated:', response.data);
           // Refresh the inventory or handle success as needed
@@ -210,7 +210,7 @@ function ForSaleInventory() {
 
     // Make an API call to mark the disc as for sale
     axios
-      .put(`${API_BASE_URL}/api/mark-sold/${discId}`, null, {
+      .put(`${API_BASE_URL}/mark-sold/${discId}`, null, {
         params: {
           course: course,
         },

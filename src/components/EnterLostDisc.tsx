@@ -123,7 +123,7 @@ function EnterLostDisc() {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/detect-text`, {
+      const response = await axios.post(`${API_BASE_URL}/detect-text`, {
         imageBase64: imageData,
       });
       const data = response.data;
@@ -240,11 +240,11 @@ function EnterLostDisc() {
     // if (backImage) formData.append("backImage", backImage);
 
     // axios
-    //   .post(`${API_BASE_URL}/api/found-discs`, formData, {
+    //   .post(`${API_BASE_URL}/found-discs`, formData, {
     //     headers: { "Content-Type": "multipart/form-data" },
     //   })
     axios
-      .post(`${API_BASE_URL}/api/found-discs`, discData)
+      .post(`${API_BASE_URL}/found-discs`, discData)
       .then((response) => {
         console.log("Disc added:", response.data);
 
