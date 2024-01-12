@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
 import "../styles/CameraComponent.css";
@@ -16,22 +16,34 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
   side,
   switchToManual,
 }) => {
+  
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
+
   const videoConstraints = {
-    facingMode: { exact: "environment" },
+    facingMode: isMobileDevice() ? { exact: "environment" } : "user",
   };
   const webcamRef = useRef<Webcam>(null); // Use a generic type for better type checking
   const intervalRef = useRef<number | null>(null);
   const [isDark, setIsDark] = useState(false); // State to track lighting condition
 
-  const capture = () => {
+  const capture = useCallback(() => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       console.log("Image:", imageSrc);
       if (imageSrc) {
+        // If imageSrc is not null/undefined, proceed with the capture
         onCapture(imageSrc, side);
+      } else {
+        // If imageSrc is null, handle the error
+        console.error("Webcam image is null");
+        // You can also set some state here to show an error message to the user
       }
     }
-  };
+  }, [webcamRef, side]);
 
   const checkImage = () => {
     const thresholdBrightness = 110; // Define thresholdBrightness as per your need
@@ -79,17 +91,30 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
     }
   };
 
-  useEffect(() => {
-    intervalRef.current = window.setInterval(() => {
-      checkImage();
-    }, 1000); // Adjust the interval as needed
+  useEffect(
+    () => {
+      console.log("Setting up interval");
+      intervalRef.current = window.setInterval(() => {
+        checkImage();
+      }, 1000);
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
+      return () => {
+        console.log("Clearing interval");
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    },
+    [
+      /* dependencies */
+    ]
+  );
+
+  useEffect(() => {
+    console.log(`Is mobile device: ${isMobileDevice()}`);
+    console.log(`Video constraints: ${JSON.stringify(videoConstraints)}`);
+  }, [videoConstraints]);
+
 
   return (
     <div>
