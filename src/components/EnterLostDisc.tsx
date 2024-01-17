@@ -222,11 +222,11 @@ function EnterLostDisc() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!frontImage || !backImage) {
-      // Display an error message to the user or prevent form submission
-      // Example: setError("Please capture both front and back images.");
-      return;
-    }
+    // if (!frontImage || !backImage) {
+    //   // Display an error message to the user or prevent form submission
+    //   // Example: setError("Please capture both front and back images.");
+    //   return;
+    // }
 
     setSuccessMessage(""); // Clear success message
     setErrorMessage(""); // Clear error message
