@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import "../styles/EnterLostDisc.css"; // Import the CSS file
-import { API_BASE_URL } from "../App";
+// import { API_BASE_URL } from "../App";
 import { Typography } from "@mui/material";
 import CameraComponent from "./CameraComponent";
 import ImageDetectionPopup from "./ImageDetectionPopup";
@@ -122,56 +122,57 @@ function EnterLostDisc() {
       setBackImage(imageData);
     }
 
-    try {
-      const response = await axios.post(`${API_BASE_URL}/detect-text`, {
-        imageBase64: imageData,
-      });
-      const data = response.data;
-      console.log("Data:", data);
+    //Diego -please do not interact wiht the API.
+    // try {
+    //   const response = await axios.post(`${API_BASE_URL}/detect-text`, {
+    //     imageBase64: imageData,
+    //   });
+    //   const data = response.data;
+    //   console.log("Data:", data);
 
-      if (!data || data.length === 0) {
-        // Handle no text detected
-        console.log("No text detected.");
-        setErrorMessage("No text detected.");
-        return;
-      }
+    //   if (!data || data.length === 0) {
+    //     // Handle no text detected
+    //     console.log("No text detected.");
+    //     setErrorMessage("No text detected.");
+    //     return;
+    //   }
 
-      // Map the categories
-      const mappedResponse = data.map(
-        (item: { text: any; category: string }) => ({
-          text: item.text,
-          category: mapToPredefinedCategory(item.category),
-        })
-      );
+    //   // Map the categories
+    //   const mappedResponse = data.map(
+    //     (item: { text: any; category: string }) => ({
+    //       text: item.text,
+    //       category: mapToPredefinedCategory(item.category),
+    //     })
+    //   );
 
-      console.log("Mapped response:", mappedResponse);
+    //   console.log("Mapped response:", mappedResponse);
 
-      setApiResponseData(mappedResponse);
-      setShowPopup(true); // Show popup when data is received
-    } catch (error) {
-      console.error("Error processing image:", error);
+    //   setApiResponseData(mappedResponse);
+    //   setShowPopup(true); // Show popup when data is received
+    // } catch (error) {
+    //   console.error("Error processing image:", error);
 
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+    //   if (axios.isAxiosError(error)) {
+    //     const axiosError = error as AxiosError;
 
-        // Check if the error status is 500 and retry if within the maximum retry attempts
-        if (
-          axiosError.response?.status === 500 &&
-          retryCount < MAX_RETRY_ATTEMPTS
-        ) {
-          console.log(`Retrying API call (Attempt ${retryCount + 1})...`);
-          await new Promise<void>((resolve) => setTimeout(resolve, 1000)); // Wait for a moment before retrying
-          await handleImageCapture(imageData, side, retryCount + 1);
-        } else if (axiosError.response?.status === 204) {
-          // Handle no text detected
-          console.log("No text detected.");
-          setErrorMessage("No text detected.");
-        } else {
-          // Handle other errors or reach maximum retry attempts
-          console.error("Max retry attempts reached or non-retryable error.");
-        }
-      }
-    }
+    //     // Check if the error status is 500 and retry if within the maximum retry attempts
+    //     if (
+    //       axiosError.response?.status === 500 &&
+    //       retryCount < MAX_RETRY_ATTEMPTS
+    //     ) {
+    //       console.log(`Retrying API call (Attempt ${retryCount + 1})...`);
+    //       await new Promise<void>((resolve) => setTimeout(resolve, 1000)); // Wait for a moment before retrying
+    //       await handleImageCapture(imageData, side, retryCount + 1);
+    //     } else if (axiosError.response?.status === 204) {
+    //       // Handle no text detected
+    //       console.log("No text detected.");
+    //       setErrorMessage("No text detected.");
+    //     } else {
+    //       // Handle other errors or reach maximum retry attempts
+    //       console.error("Max retry attempts reached or non-retryable error.");
+    //     }
+    //   }
+    // }
   };
 
   const prefillForm = () => {
@@ -219,6 +220,7 @@ function EnterLostDisc() {
     setShowPopup(false);
   };
 
+  //Diego - please do not interact with the API.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -230,7 +232,7 @@ function EnterLostDisc() {
 
     setSuccessMessage(""); // Clear success message
     setErrorMessage(""); // Clear error message
-    setIsLoading(true); // Set loading to true when the request is initiated
+    // setIsLoading(true); // Set loading to true when the request is initiated
 
     // const formData = new FormData();
     // Object.entries(discData).forEach(([key, value]) => {
@@ -243,32 +245,32 @@ function EnterLostDisc() {
     //   .post(`${API_BASE_URL}/found-discs`, formData, {
     //     headers: { "Content-Type": "multipart/form-data" },
     //   })
-    axios
-      .post(`${API_BASE_URL}/found-discs`, discData)
-      .then((response) => {
-        console.log("Disc added:", response.data);
+    // axios
+    //   .post(`${API_BASE_URL}/found-discs`, discData)
+    //   .then((response) => {
+    //     console.log("Disc added:", response.data);
 
-        // Set success message with the ID of the row from the DB
-        setSuccessMessage(`Disc added with ID ${response.data.id}`);
+    //     // Set success message with the ID of the row from the DB
+    //     setSuccessMessage(`Disc added with ID ${response.data.id}`);
 
-        // Clear the form and loading state
-        setDiscData({
-          course: "Stafford Woods",
-          name: "",
-          disc: "",
-          phoneNumber: "",
-          bin: discData.bin, //don't overwrite the bin number
-          comments: "",
-          dateFound: new Date().toISOString().split("T")[0],
-          color: "",
-          brand: discData.brand, //don't overwrite the brand
-        });
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error adding disc:", error);
-        setIsLoading(false); // Clear loading state on error
-      });
+    //     // Clear the form and loading state
+    //     setDiscData({
+    //       course: "Stafford Woods",
+    //       name: "",
+    //       disc: "",
+    //       phoneNumber: "",
+    //       bin: discData.bin, //don't overwrite the bin number
+    //       comments: "",
+    //       dateFound: new Date().toISOString().split("T")[0],
+    //       color: "",
+    //       brand: discData.brand, //don't overwrite the brand
+    //     });
+    //     setIsLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error adding disc:", error);
+    //     setIsLoading(false); // Clear loading state on error
+    //   });
   };
 
   const handleCameraButtonClick = () => {

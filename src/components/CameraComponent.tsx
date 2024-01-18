@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import "../styles/CameraComponent.css";
 import "../styles/EnterLostDisc.css"; // Import the CSS file
-import { API_BASE_URL } from "../App";
+// import { API_BASE_URL } from "../App";
 
 interface CameraComponentProps {
   onCapture: (imageData: string, side: string) => void;
@@ -16,7 +16,6 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
   side,
   switchToManual,
 }) => {
-  
   const isMobileDevice = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -114,7 +113,6 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
     console.log(`Is mobile device: ${isMobileDevice()}`);
     console.log(`Video constraints: ${JSON.stringify(videoConstraints)}`);
   }, [videoConstraints]);
-
 
   return (
     <div>
