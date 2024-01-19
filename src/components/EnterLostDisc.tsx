@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import CameraRollOutlinedIcon from '@mui/icons-material/CameraRollOutlined';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import EditIcon from "@mui/icons-material/Edit";
 import "../styles/EnterLostDisc.css"; // Import the CSS file
 // import { API_BASE_URL } from "../App";
@@ -286,18 +288,18 @@ function EnterLostDisc() {
   return (
     <div className="lost-disc-container">
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <h1>Enter Lost Disc</h1>
+      <h1 className="EnterLostDisc">ENTER LOST DISC</h1>
       <div className="button-container">
         <button
-          className={showCamera ? "button active" : "button"}
+          className={showCamera ? "button active" : "button button-red"}
           onClick={handleCameraButtonClick}
         >
-          <CameraAltIcon className="button-icon" />
-          <span className="button-text">Use Camera</span>
+          <CameraRollOutlinedIcon className="button-icon-camera" />
+          <span className="button-text">USE CAMERA</span>
         </button>
-        <button className="button" onClick={handleManualButtonClick}>
-          <EditIcon className="button-icon" />
-          <span className="button-text">Enter Manually</span>
+        <button className="button button-black" onClick={handleManualButtonClick}>
+          <CreateOutlinedIcon className="button-icon-pencil" />
+          <span className="button-text">ENTER MANUALLY</span>
         </button>
       </div>
 
@@ -430,7 +432,7 @@ function EnterLostDisc() {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group custom-comments">
             <label htmlFor="bin">Comments:</label>
             <input
               type="text" // Use type="number" to display the numeric keyboard on mobile
@@ -440,12 +442,19 @@ function EnterLostDisc() {
               onChange={handleChange}
             />
           </div>
+          <div className="form-buttons-container">
+          <button 
+            type="submit"
+            className="reset-format">
+             Reset Form        
+          </button>
           <button
             type="submit"
             className={`submit-button ${isLoading ? "loading" : ""}`}
           >
-            {isLoading ? <CircularProgress /> : "Submit"}
+            {isLoading ? <CircularProgress /> : "Submit Disc"}
           </button>
+          </div>
           {successMessage && (
             <p className="success-message">{successMessage}</p>
           )}

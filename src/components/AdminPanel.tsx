@@ -10,15 +10,23 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  IconButton,
 } from "@mui/material"; // Import Button and ButtonGroup from MUI
 import ExpiredPickups from "./ExpiredPickups";
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
+
+import ColorLogoWhite from "../Images/Color_Logo_White.png";
+import TextLogo from "../Images/Text_Logo.png";
+import { ForkRight } from "@mui/icons-material";
+
 
 function AdminPanel() {
   const REACT_APP_ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
   const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
   const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
+  
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
 
@@ -67,27 +75,43 @@ function AdminPanel() {
     setIsPasswordEntered(false);
   };
 
+
   return (
     <div className="App">
       <header className="App-header">
+        <div className="Header-content">
+        <div className="Logo">
+          <img src={ColorLogoWhite} alt="" style={{ 
+            width: "50px"
+          }}/>
+          <img src={TextLogo} alt="" style={{ 
+            width: "90px", 
+            height: "40px",
+            marginTop: "5px"  
+          }}/>
+        </div>
         <Typography
           sx={{
             color: "white",
-            padding: "5px",
-            margin: "0px",
-            fontSize: isMobile ? "2rem" : "3rem",
-            marginBottom: "15px",
+            fontWeight: 800,
+            fontFamily: "Oswald",
+            marginTop: "10px",
+            fontSize: isMobile ? "1.2rem" : "1.2rem",
           }}
         >
-          Stafford Woods Lost and Found
+          TRANQUILITY TRAILS
         </Typography>
-        <nav>
+        <div className="Navbar-menu">
+        <DensityMediumIcon className="Navbar-menu-icon"/>
+        </div>
+        </div>
+        <nav className="Menu-responsive">
           <ButtonGroup variant="contained" color="primary">
             <Button
               onClick={() => switchTab("enterLostDisc")}
               color={activeTab === "enterLostDisc" ? "primary" : "inherit"}
               className={activeTab === "enterLostDisc" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".75rem" : "1rem" }}
+              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
             >
               Enter Lost Disc
             </Button>
@@ -95,7 +119,7 @@ function AdminPanel() {
               onClick={() => switchTab("inventory")}
               color={activeTab === "inventory" ? "primary" : "inherit"}
               className={activeTab === "inventory" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".75rem" : "1rem" }}
+              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
             >
               Inventory
             </Button>
@@ -103,11 +127,21 @@ function AdminPanel() {
               onClick={() => switchTab("forSaleInventory")}
               color={activeTab === "forSaleInventory" ? "primary" : "inherit"}
               className={activeTab === "forSaleInventory" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".75rem" : "1rem" }}
+              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
             >
               For Sale
             </Button>
           </ButtonGroup>
+          <div className="Navbar-menu">
+        <DensityMediumIcon className="Navbar-menu-icon"/>
+        </div>
+          <div className="Mobile-menu" >
+            <ul>
+              <li className="nav-item" onClick={() => switchTab("enterLostDisc")}>Enter Lost Disc</li>
+              <li className="nav-item" onClick={() => switchTab("inventory")}>Inventory</li>
+              <li className="nav-item" onClick={() => switchTab("forSaleInventory")}>For Sale</li>
+            </ul>
+          </div>
         </nav>
       </header>
       {isPasswordEntered ? ( // Render secret content if the password is entered
