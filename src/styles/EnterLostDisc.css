@@ -2,7 +2,7 @@
 
 .lost-disc-container {
   max-width: 400px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -10,7 +10,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  background-color: #f0efef;
   margin-bottom: 20px;
 }
 
@@ -23,6 +23,7 @@ label {
   font-weight: bold;
   margin-bottom: 5px;
   text-align: left;
+  margin-left: 10px;
 }
 
 input {
@@ -33,18 +34,50 @@ input {
   font-size: 16px;
 }
 
+.custom-comments input {
+  font-size: 30px;
+}
+
+.form-buttons-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.reset-format {
+  background-color: #f0efef;
+  color: #878787;
+  border: 1px solid ;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 15px;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-format:hover {
+  background-color: #c8c8c8;
+  transition: 0.3s;
+}
+
 .submit-button {
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 3px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
+  text-transform: uppercase;
 }
 
 .submit-button:hover {
   background-color: #0056b3;
+  transition: 0.3s;
 }
 
 .success-message {
@@ -67,14 +100,13 @@ input {
 .button {
   width: 175px; /* Large square size */
   height: 175px;
-  border-radius: 10px; /* Rounded corners */
+  /* border-radius: 10px; */
   margin: 10px;
-  padding: 10px !important;
+  padding: 2px !important;
   font-size: 16px !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   color: #ffffff;
   background: #008060;
   border: 1px solid #ffffff;
@@ -83,9 +115,8 @@ input {
 .button:hover,
 .button:focus,
 .button:active {
-  color: #006e52;
+  color: #353535;
   background: #ffffff;
-  border: 1px solid #008060;
   cursor: pointer;
 }
 
@@ -97,13 +128,15 @@ input {
     justify-content: center;
     width: 100%;
     align-items: center;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.2em;
+    
   }
 
   .button {
-    width: 125px;
-    height: 125px;
-    font-size: 0.85rem !important;
+    width: 165px;
+    height: 40px;
+    font-size: 0.80rem !important;
+    border-radius: 3px;
   }
 }
 
@@ -115,20 +148,57 @@ input {
     justify-content: center;
     align-items: center;
     width: 100%;
+    
   }
 
   .button {
-    width: 150px;
-    height: 150px;
-    font-size: 0.85rem !important;
+    width: 165px;
+    height: 40px;
+    font-size: 0.80rem !important;
+    border-radius: 3px;
   }
 }
 
+.button-red {
+  background-color: rgb(173, 42, 42);
+}
+
+.button-black{
+  background-color: black;
+  transition: 0.3s;
+  border: 1px solid black;
+  height: 38px;
+}
+
+.button-red:hover {
+  background-color: rgb(255, 255, 255);
+  transition: 0.3s;
+  border: 1px solid black;
+}
+
+.EnterLostDisc {
+  font-size: 30px;
+  font-family: "Oswald", sans-serif;;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.button-icon-camera,
+.button-icon-pencil {
+  margin: 5px;
+  font-size: 7px;
+}
+
+.button-icon-pencil {
+  font-size: 5px;
+}
+
 .button-icon {
-  font-size: 48px; /* Larger icon size */
-  width: 70% !important;
-  height: 70% !important;
+  font-size: 40px; /* Larger icon size */
+  width: 40% !important;
+  height: 30% !important;
   margin-bottom: 5px;
+  padding: 0;
 }
 
 .button-text {
@@ -137,7 +207,7 @@ input {
 
 /* Add this to your CSS file */
 .image-container {
-  width: 150px;
+  width: 160px;
   height: 150px;
   border: 2px dashed #ccc;
   display: flex;
@@ -167,6 +237,7 @@ input {
   align-items: center;
   width: 100%;
   margin-bottom: 10px;
+  gap: 22px;
 }
 
 .image-placeholder {
