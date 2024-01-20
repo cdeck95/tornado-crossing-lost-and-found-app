@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import BackHandOutlinedIcon from "@mui/icons-material/BackHandOutlined";
+import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import {
   faCircle,
   faSquareCaretUp,
@@ -58,27 +59,33 @@ function Inventory() {
   const [claimedDisc, setClaimedDisc] = useState<number>(0); // Provide the type 'Disc | null'
   const [sortOption, setSortOption] = useState<keyof Disc>("pickupDeadline"); // Set initial sort option
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc"); // Set initial sort direction to DESC
-  const [expandedRows, setExpandedRows] = useState<RowId[]>([]);
-  // const [showPastDeadlines, setShowPastDeadlines] = useState(false);
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-  const [refreshing, setRefreshing] = useState(false);
   const course = process.env.REACT_APP_COURSE_NAME!;
-
-  // const handleRefresh = useCallback(() => {
-  //   getInventory();
-  //   setRefreshing(false);
-  // }, []);
 
   const handleRefresh = async () => {
     getInventory(course);
   };
 
+  // const [expandedRows, setExpandedRows] = useState<RowId[]>([]);
+
+  // const toggleRow = (rowId: RowId) => {
+  //   if (expandedRows.includes(rowId)) {
+  //     setExpandedRows(expandedRows.filter((id) => id !== rowId));
+  //   } else {
+  //     setExpandedRows([...expandedRows, rowId]);
+  //   }
+  // };
+
+  const [expandedRow, setExpandedRow] = useState<RowId | null>(null);
+
   const toggleRow = (rowId: RowId) => {
-    if (expandedRows.includes(rowId)) {
-      setExpandedRows(expandedRows.filter((id) => id !== rowId));
+    // If the clicked row is already expanded, collapse it
+    if (expandedRow === rowId) {
+      setExpandedRow(null);
     } else {
-      setExpandedRows([...expandedRows, rowId]);
+      // Otherwise, expand the clicked row and collapse the previous one
+      setExpandedRow(rowId);
     }
   };
 
@@ -135,6 +142,7 @@ function Inventory() {
   };
 
   const getInventory = (course: string) => {
+    setIsLoading(true);
     axios
       .get(`${API_BASE_URL}/inventory`, {
         params: {
@@ -200,9 +208,11 @@ function Inventory() {
         });
 
         setFilteredInventory(filteredInventory);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching inventory:", error);
+        setIsLoading(false);
       });
   };
 
@@ -474,7 +484,7 @@ function Inventory() {
                   <React.Fragment key={disc.id}>
                     <tr onClick={() => toggleRow(disc.id!)}>
                       <td className="table-cell">
-                        {expandedRows.includes(disc.id!) ? (
+                        {expandedRow === disc.id ? (
                           <FontAwesomeIcon
                             icon={faSquareCaretUp}
                             className="icon"
@@ -535,7 +545,7 @@ function Inventory() {
                       </td>
                       <td className="table-cell"></td>
                     </tr>
-                    {expandedRows.includes(disc.id!) && (
+                    {expandedRow === disc.id && (
                       <tr>
                         <td colSpan={8}>
                           <div>
@@ -569,14 +579,6 @@ function Inventory() {
                                   onClick={() => startEditing(disc)}
                                 ></EditOutlinedIcon>
                               )}
-                              <DeleteIcon
-                                onClick={() => handleDeleteClick()}
-                                sx={{
-                                  marginLeft: "20px",
-                                  marginTop: "5px",
-                                  cursor: "pointer",
-                                }}
-                              />
                             </div>
                             <div className="row">
                               <p className="detailed-text">
@@ -994,6 +996,21 @@ function Inventory() {
                                           }}
                                         />
                                         <p>Disc Claimed</p>
+                                      </div>
+                                    </button>
+                                    <button
+                                      className="delete-button"
+                                      onClick={() => handleDeleteClick()}
+                                      style={{ marginLeft: "10px" }}
+                                    >
+                                      <div className="row">
+                                        <RemoveCircleOutlineOutlinedIcon
+                                          sx={{
+                                            fontSize: "1rem",
+                                            marginRight: "5px",
+                                          }}
+                                        />
+                                        <p>Delete Disc</p>
                                       </div>
                                     </button>
                                   </div>
