@@ -5,6 +5,8 @@ import "../styles/Inventory.css"; // Import the CSS file
 import { DateTime } from "luxon";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
+import BackHandOutlinedIcon from "@mui/icons-material/BackHandOutlined";
 import {
   faCircle,
   faSquareCaretUp,
@@ -30,6 +32,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import EditDialog from "./EditDialog";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
@@ -490,23 +493,44 @@ function Inventory() {
                       <td className="table-cell">
                         {disc.pickupDeadline}
                         {new Date(disc.pickupDeadline!) < new Date() && (
-                          <FontAwesomeIcon
-                            icon={faCircle}
-                            style={{ color: "red", marginLeft: "10px" }}
-                          />
+                          <Tooltip
+                            title="Pickup Overdue"
+                            sx={{ marginLeft: "10px" }}
+                          >
+                            <IconButton>
+                              <FontAwesomeIcon
+                                icon={faCircle}
+                                style={{ color: "red" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
                         )}
                         {disc.status === DiscStateString.New && (
-                          <FontAwesomeIcon
-                            icon={faCircle}
-                            style={{ color: "orange", marginLeft: "10px" }}
-                          />
+                          <Tooltip
+                            title="New - Pending Owner Notification"
+                            sx={{ marginLeft: "10px" }}
+                          >
+                            <IconButton>
+                              <FontAwesomeIcon
+                                icon={faCircle}
+                                style={{ color: "orange" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
                         )}
                         {disc.status !== DiscStateString.New &&
                           new Date(disc.pickupDeadline!) >= new Date() && (
-                            <FontAwesomeIcon
-                              icon={faCircle}
-                              style={{ color: "yellow", marginLeft: "10px" }}
-                            />
+                            <Tooltip
+                              title="Unclaimed - Owner Notified"
+                              sx={{ marginLeft: "10px" }}
+                            >
+                              <IconButton>
+                                <FontAwesomeIcon
+                                  icon={faCircle}
+                                  style={{ color: "yellow" }}
+                                />
+                              </IconButton>
+                            </Tooltip>
                           )}
                       </td>
                       <td className="table-cell"></td>
@@ -935,7 +959,7 @@ function Inventory() {
                                     {new Date(disc.pickupDeadline!) <
                                       new Date() && (
                                       <button
-                                        className="inventory-button"
+                                        className="sold-button"
                                         onClick={() =>
                                           listForSale(
                                             disc.id!.toString(),
@@ -943,18 +967,34 @@ function Inventory() {
                                           )
                                         }
                                       >
-                                        List For Sale
+                                        <div className="row">
+                                          <SellOutlinedIcon
+                                            sx={{
+                                              fontSize: "1rem",
+                                              marginRight: "5px",
+                                            }}
+                                          />
+                                          <p>List for Sale</p>
+                                        </div>
                                       </button>
                                     )}
 
                                     <button
-                                      className="inventory-button"
+                                      className="claimed-button"
                                       onClick={() =>
                                         markAsClaimed(disc.id!.toString())
                                       }
                                       style={{ marginLeft: "10px" }}
                                     >
-                                      Mark as Claimed
+                                      <div className="row">
+                                        <BackHandOutlinedIcon
+                                          sx={{
+                                            fontSize: "1rem",
+                                            marginRight: "5px",
+                                          }}
+                                        />
+                                        <p>Disc Claimed</p>
+                                      </div>
                                     </button>
                                   </div>
                                 ) : null}

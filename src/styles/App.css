@@ -3,8 +3,10 @@
 :root,
 #root {
   --primary-blue: #005daa;
+  --border-primary-blue: #228de5;
   --secondary-blue: #228de5;
   --primary-black: #000000;
+  --border-primary-black: #606060;
   --primary-red: #d31245;
   --primary-white: #ffffff;
   --primary-grey: #e3e3e3;
@@ -290,6 +292,7 @@ th {
   z-index: 1000 !important;
   border-top: 1px solid var(--table-seperator);
   border-bottom: 1px solid var(--table-seperator);
+  width: 100%;
 }
 
 tr {

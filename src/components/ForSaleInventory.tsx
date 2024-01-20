@@ -4,6 +4,8 @@ import { API_BASE_URL, Disc, DiscStateString } from "../App";
 import "../styles/Inventory.css"; // Import the CSS file
 import { DateTime } from "luxon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
+import BackHandOutlinedIcon from "@mui/icons-material/BackHandOutlined";
 import {
   faCircle,
   faSquareCaretUp,
@@ -961,7 +963,7 @@ function ForSaleInventory() {
                                     {new Date(disc.pickupDeadline!) <
                                       new Date() && (
                                       <button
-                                        className="inventory-button"
+                                        className="sold-button"
                                         onClick={() =>
                                           markAsSold(
                                             disc.id!.toString(),
@@ -969,18 +971,34 @@ function ForSaleInventory() {
                                           )
                                         }
                                       >
-                                        Mark as Sold
+                                        <div className="row">
+                                          <SellOutlinedIcon
+                                            sx={{
+                                              fontSize: "1rem",
+                                              marginRight: "5px",
+                                            }}
+                                          />
+                                          <p>Sold</p>
+                                        </div>
                                       </button>
                                     )}
 
                                     <button
-                                      className="inventory-button"
+                                      className="claimed-button"
                                       onClick={() =>
                                         markAsClaimed(disc.id!.toString())
                                       }
                                       style={{ marginLeft: "10px" }}
                                     >
-                                      Mark as Claimed
+                                      <div className="row">
+                                        <BackHandOutlinedIcon
+                                          sx={{
+                                            fontSize: "1rem",
+                                            marginRight: "5px",
+                                          }}
+                                        />
+                                        <p>Claimed</p>
+                                      </div>
                                     </button>
                                   </Box>
                                 ) : null}
