@@ -322,7 +322,7 @@ function PublicInventory() {
             />
             <Chip
               variant="outlined"
-              label="Overdue"
+              label="Expired"
               className={
                 isOverdueFilter ? "filter-button-selected" : "filter-button"
               }
@@ -342,16 +342,17 @@ function PublicInventory() {
         <div className="table-container">
           <table className="inventory-table">
             <colgroup>
-              <col style={{ width: "35px" }} />
-              <col style={{ width: "30%" }} /> <col style={{ width: "30%" }} />{" "}
-              <col style={{ width: "37%" }} />{" "}
+              <col style={{ width: "30px" }} />
+              <col style={{ width: "33%" }} />
+              <col style={{ width: "33%", minWidth: "150px" }} />
+              <col style={{ width: "33%" }} />
             </colgroup>
             <thead>
               <tr>
-                <th className="table-header"> </th>
+                <th className="table-header" />
                 {renderColumnHeader("name", "Name")}
+                {renderColumnHeader("pickupDeadline", "Claim By")}
                 {renderColumnHeader("disc", "Disc")}
-                {renderColumnHeader("pickupDeadline", "Pickup Deadline")}
               </tr>
             </thead>
             <tbody>
@@ -376,14 +377,10 @@ function PublicInventory() {
                         ? maskFirstName(disc.name)
                         : "No Name"}
                     </td>
-                    <td className="table-cell">{disc.disc}</td>
                     <td className="table-cell">
                       {disc.pickupDeadline}
                       {new Date(disc.pickupDeadline!) < new Date() && (
-                        <Tooltip
-                          title="Pickup Overdue"
-                          sx={{ marginLeft: "10px" }}
-                        >
+                        <Tooltip title="Claim Period Expired">
                           <IconButton>
                             <FontAwesomeIcon
                               icon={faCircle}
@@ -393,10 +390,7 @@ function PublicInventory() {
                         </Tooltip>
                       )}
                       {disc.status === DiscStateString.New && (
-                        <Tooltip
-                          title="New - Pending Owner Notification"
-                          sx={{ marginLeft: "10px" }}
-                        >
+                        <Tooltip title="New - Pending Owner Notification">
                           <IconButton>
                             <FontAwesomeIcon
                               icon={faCircle}
@@ -407,10 +401,7 @@ function PublicInventory() {
                       )}
                       {disc.status !== DiscStateString.New &&
                         new Date(disc.pickupDeadline!) >= new Date() && (
-                          <Tooltip
-                            title="Unclaimed - Owner Notified"
-                            sx={{ marginLeft: "10px" }}
-                          >
+                          <Tooltip title="Unclaimed - Owner Notified">
                             <IconButton>
                               <FontAwesomeIcon
                                 icon={faCircle}
@@ -420,7 +411,7 @@ function PublicInventory() {
                           </Tooltip>
                         )}
                     </td>
-                    <td className="table-cell"></td>
+                    <td className="table-cell">{disc.disc}</td>
                   </tr>
                   {expandedRows.includes(disc.id!) && (
                     <tr>

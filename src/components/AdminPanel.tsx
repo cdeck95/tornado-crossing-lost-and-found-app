@@ -16,6 +16,8 @@ import {
   useMediaQuery,
   useTheme,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material"; // Import Button and ButtonGroup from MUI
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
@@ -23,8 +25,8 @@ import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 import ColorLogoWhite from "../Images/Color_Logo_White.png";
 import TextLogo from "../Images/Text_Logo.png";
 import MenuButton from "@mui/joy/MenuButton";
-import Menu from "@mui/joy/Menu";
-import MenuItem from "@mui/joy/MenuItem";
+// import Menu from "@mui/joy/Menu";
+// import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
 
 function AdminPanel() {
@@ -94,6 +96,15 @@ function AdminPanel() {
     }
   };
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -102,56 +113,60 @@ function AdminPanel() {
             <img src={ColorLogoWhite} alt="DRN-Logo" className="logo" />
             <img src={TextLogo} alt="DRN-Logo" className="logo-text" />
           </div>
-          <h1 className="header">{course}</h1>
-          <Dropdown>
-            <MenuButton
-              startDecorator={
-                <DensityMediumIcon
-                  className="Navbar-menu-icon"
-                  sx={{
-                    marginLeft: "0.5rem !important",
-                  }}
-                />
-              }
-            ></MenuButton>
-            <Menu>
-              <MenuItem
-                {...(selectedIndex === 0 && {
-                  selected: true,
-                  variant: "soft",
-                })}
-                onClick={createHandleClose(0)}
-              >
-                Report Lost Disc
-              </MenuItem>
-              <MenuItem
-                selected={selectedIndex === 1}
-                onClick={createHandleClose(1)}
-              >
-                Inventory
-              </MenuItem>
-              <MenuItem
-                selected={selectedIndex === 2}
-                onClick={createHandleClose(2)}
-              >
-                For Sale
-              </MenuItem>
-              <MenuItem
-                {...(selectedIndex === 3 && {
-                  selected: true,
-                  variant: "soft",
-                })}
-                onClick={createHandleClose(3)}
-              >
-                Public View
-              </MenuItem>
-            </Menu>
-          </Dropdown>
-          <div></div>
+          <Button
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <DensityMediumIcon className="Navbar-menu-icon" />
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem
+              {...(selectedIndex === 0 && {
+                selected: true,
+                variant: "soft",
+              })}
+              onClick={createHandleClose(0)}
+            >
+              Report Lost Disc
+            </MenuItem>
+            <MenuItem
+              selected={selectedIndex === 1}
+              onClick={createHandleClose(1)}
+            >
+              Inventory
+            </MenuItem>
+            <MenuItem
+              selected={selectedIndex === 2}
+              onClick={createHandleClose(2)}
+            >
+              For Sale
+            </MenuItem>
+            <MenuItem
+              {...(selectedIndex === 3 && {
+                selected: true,
+                variant: "soft",
+              })}
+              onClick={createHandleClose(3)}
+            >
+              Public View
+            </MenuItem>
+          </Menu>
         </div>
       </header>
       {isPasswordEntered ? ( // Render secret content if the password is entered
         <main className="container">
+          <h1 className="header">{course} L & F</h1>
           {selectedIndex === 0 && <EnterLostDisc />}
           {selectedIndex === 1 && <Inventory />}
           {selectedIndex === 2 && <ForSaleInventory />}

@@ -361,6 +361,9 @@ function Inventory() {
     <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
       <div className="page-container">
         <div className="col-center">
+          <div className="inventory-count">
+            Total Discs: {filteredInventory.length}
+          </div>
           <Paper
             component="form"
             sx={{
@@ -402,6 +405,7 @@ function Inventory() {
               <SearchIcon />
             </IconButton>
           </Paper>
+
           <Popover
             id={idPopover}
             open={openPopover}
@@ -443,7 +447,7 @@ function Inventory() {
               />
               <Chip
                 variant="outlined"
-                label="Overdue"
+                label="Expired"
                 className={
                   isOverdueFilter ? "filter-button-selected" : "filter-button"
                 }
@@ -458,25 +462,22 @@ function Inventory() {
             </Box>
           </Popover>
           <Legend />
-          <div className="inventory-count">
-            Total Discs: {filteredInventory.length}
-          </div>
         </div>
         <div className="container">
           <div className="table-container">
             <table className="inventory-table" style={{ tableLayout: "fixed" }}>
               <colgroup>
-                <col style={{ width: "35px" }} />
-                <col style={{ width: "30%" }} />
-                <col style={{ width: "30%" }} />
-                <col style={{ width: "37%" }} />
+                <col style={{ width: "30px" }} />
+                <col style={{ width: "33%" }} />
+                <col style={{ width: "33%", minWidth: "150px" }} />
+                <col style={{ width: "33%" }} />
               </colgroup>
               <thead>
                 <tr>
                   <th className="table-header" />
                   {renderColumnHeader("name", "Name")}
+                  {renderColumnHeader("pickupDeadline", "Claim By")}
                   {renderColumnHeader("disc", "Disc")}
-                  {renderColumnHeader("pickupDeadline", "Pickup Deadline")}
                 </tr>
               </thead>
               <tbody>
@@ -499,14 +500,10 @@ function Inventory() {
                       <td className="table-cell">
                         {disc.name.length > 0 ? disc.name : "No Name"}
                       </td>
-                      <td className="table-cell">{disc.disc}</td>
                       <td className="table-cell">
                         {disc.pickupDeadline}
                         {new Date(disc.pickupDeadline!) < new Date() && (
-                          <Tooltip
-                            title="Pickup Overdue"
-                            sx={{ marginLeft: "10px" }}
-                          >
+                          <Tooltip title="Claim Period Expired">
                             <IconButton>
                               <FontAwesomeIcon
                                 icon={faCircle}
@@ -516,10 +513,7 @@ function Inventory() {
                           </Tooltip>
                         )}
                         {disc.status === DiscStateString.New && (
-                          <Tooltip
-                            title="New - Pending Owner Notification"
-                            sx={{ marginLeft: "10px" }}
-                          >
+                          <Tooltip title="New - Pending Owner Notification">
                             <IconButton>
                               <FontAwesomeIcon
                                 icon={faCircle}
@@ -530,10 +524,7 @@ function Inventory() {
                         )}
                         {disc.status !== DiscStateString.New &&
                           new Date(disc.pickupDeadline!) >= new Date() && (
-                            <Tooltip
-                              title="Unclaimed - Owner Notified"
-                              sx={{ marginLeft: "10px" }}
-                            >
+                            <Tooltip title="Unclaimed - Owner Notified">
                               <IconButton>
                                 <FontAwesomeIcon
                                   icon={faCircle}
@@ -543,7 +534,7 @@ function Inventory() {
                             </Tooltip>
                           )}
                       </td>
-                      <td className="table-cell"></td>
+                      <td className="table-cell">{disc.disc}</td>
                     </tr>
                     {expandedRow === disc.id && (
                       <tr>
@@ -955,6 +946,21 @@ function Inventory() {
                                   alignItems: "center",
                                 }}
                               >
+                                <button
+                                  className="delete-button"
+                                  onClick={() => handleDeleteClick()}
+                                  style={{ marginLeft: "10px" }}
+                                >
+                                  <div className="row">
+                                    <RemoveCircleOutlineOutlinedIcon
+                                      sx={{
+                                        fontSize: "1rem",
+                                        marginRight: "5px",
+                                      }}
+                                    />
+                                    <p>Delete Disc</p>
+                                  </div>
+                                </button>
                                 {disc.id !== claimedDisc ? (
                                   <div>
                                     {/* Check if the pickup deadline is in the past */}
@@ -996,21 +1002,6 @@ function Inventory() {
                                           }}
                                         />
                                         <p>Disc Claimed</p>
-                                      </div>
-                                    </button>
-                                    <button
-                                      className="delete-button"
-                                      onClick={() => handleDeleteClick()}
-                                      style={{ marginLeft: "10px" }}
-                                    >
-                                      <div className="row">
-                                        <RemoveCircleOutlineOutlinedIcon
-                                          sx={{
-                                            fontSize: "1rem",
-                                            marginRight: "5px",
-                                          }}
-                                        />
-                                        <p>Delete Disc</p>
                                       </div>
                                     </button>
                                   </div>

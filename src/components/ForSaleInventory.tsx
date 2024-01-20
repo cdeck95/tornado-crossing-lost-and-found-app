@@ -6,6 +6,8 @@ import { DateTime } from "luxon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import BackHandOutlinedIcon from "@mui/icons-material/BackHandOutlined";
+import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
+
 import {
   faCircle,
   faSquareCaretUp,
@@ -378,6 +380,9 @@ function ForSaleInventory() {
     <PullToRefresh className="ptr-override" onRefresh={handleRefresh}>
       <div className="page-container">
         <div className="col-center">
+          <div className="inventory-count">
+            Total Discs For Sale: {filteredInventory.length}
+          </div>
           <Paper
             component="form"
             sx={{
@@ -419,65 +424,6 @@ function ForSaleInventory() {
               <SearchIcon />
             </IconButton>
           </Paper>
-          {/* <Popover
-            id={idPopover}
-            open={openPopover}
-            anchorEl={anchorElPopover}
-            onClose={handleClosePopover}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-          >
-            <Box className={isMobile ? "filter-row-mobile" : "filter-row"}>
-              <Chip
-                variant="outlined"
-                label="New"
-                className={
-                  isNewFilter ? "filter-button-selected" : "filter-button"
-                }
-                avatar={
-                  <FontAwesomeIcon
-                    icon={faCircle}
-                    style={{ color: "orange", width: "20px", height: "20px" }}
-                  />
-                }
-                onClick={() => setFilter("New")}
-              />
-              <Chip
-                variant="outlined"
-                label="Unclaimed"
-                className={
-                  isUnclaimedFilter ? "filter-button-selected" : "filter-button"
-                }
-                avatar={
-                  <FontAwesomeIcon
-                    icon={faCircle}
-                    style={{ color: "yellow", width: "20px", height: "20px" }}
-                  />
-                }
-                onClick={() => setFilter("Unclaimed")}
-              />
-              <Chip
-                variant="outlined"
-                label="Overdue"
-                className={
-                  isOverdueFilter ? "filter-button-selected" : "filter-button"
-                }
-                avatar={
-                  <FontAwesomeIcon
-                    icon={faCircle}
-                    style={{ color: "red", width: "20px", height: "20px" }}
-                  />
-                }
-                onClick={() => setFilter("Overdue")}
-              />
-            </Box>
-          </Popover>
-          <Legend /> */}
-          <div className="inventory-count">
-            Total Discs For Sale: {filteredInventory.length}
-          </div>
         </div>
         <div className="container">
           <div className="table-container">
@@ -577,14 +523,6 @@ function ForSaleInventory() {
                                   onClick={() => startEditing(disc)}
                                 ></EditOutlinedIcon>
                               )}
-                              <DeleteIcon
-                                onClick={() => handleDeleteClick()}
-                                sx={{
-                                  marginLeft: "20px",
-                                  marginTop: "5px",
-                                  cursor: "pointer",
-                                }}
-                              />
                             </div>
                             <div className="row">
                               <p className="detailed-text">
@@ -969,6 +907,21 @@ function ForSaleInventory() {
                                       alignItems: "center",
                                     }}
                                   >
+                                    <button
+                                      className="delete-button"
+                                      onClick={() => handleDeleteClick()}
+                                      style={{ marginLeft: "10px" }}
+                                    >
+                                      <div className="row">
+                                        <RemoveCircleOutlineOutlinedIcon
+                                          sx={{
+                                            fontSize: "1rem",
+                                            marginRight: "5px",
+                                          }}
+                                        />
+                                        <p>Delete</p>
+                                      </div>
+                                    </button>
                                     {/* Check if the pickup deadline is in the past */}
                                     {new Date(disc.pickupDeadline!) <
                                       new Date() && (

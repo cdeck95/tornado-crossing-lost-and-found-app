@@ -9,8 +9,11 @@
 
 /* Style for the inventory count display */
 .inventory-count {
-  margin-top: 10px;
-  font-weight: bold;
+  margin-top: 0px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 1.7px;
+  font-family: "Bebas Neue";
 }
 
 /* Styles for the table headers */
@@ -20,6 +23,7 @@
   font-weight: normal;
   padding: 8px;
   font-family: "Lato Regular";
+  width: 100%;
 }
 
 /* Styles for the table cells */

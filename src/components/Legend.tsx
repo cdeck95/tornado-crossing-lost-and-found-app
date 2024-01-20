@@ -6,7 +6,7 @@ function Legend() {
     <div className="legend">
       <div className="legend-item">
         <FontAwesomeIcon icon={faCircle} style={{ color: "red" }} />
-        <span>Pickup Overdue</span>
+        <span>Claim Expired</span>
       </div>
       <div className="legend-item">
         <FontAwesomeIcon icon={faCircle} style={{ color: "orange" }} />

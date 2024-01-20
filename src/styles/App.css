@@ -79,7 +79,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  width: 100%;
 }
 
 header {
@@ -88,10 +88,14 @@ header {
 }
 
 .header {
-  font-size: 1.5rem;
-  font-weight: 400;
-  width: 100%;
-  height: 100%;
+  font-size: 2.2rem;
+  font-family: "Bebas Neue";
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  font-weight: 500;
+  letter-spacing: 1.7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,7 +108,7 @@ button {
 .Logo-Container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
   height: 100%;
   width: 100%;
@@ -127,15 +131,15 @@ button {
   justify-content: center;
   cursor: pointer;
   color: white;
+  border: none !important;
   padding: 0px;
   margin-left: "0.5rem !important";
-  /* padding-right: 15px; */
-  /* margin-top: 12px; */
 }
 
 .Navbar-menu {
   cursor: pointer;
   color: white;
+  border: none !important;
   /* display: none; */
 }
 
@@ -189,7 +193,7 @@ button {
   padding: 5px;
   /* width: 100%; */
   /* height: 100%; */
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 
 .App-link {
@@ -293,7 +297,7 @@ th {
   z-index: 1000 !important;
   border-top: 1px solid var(--table-seperator);
   border-bottom: 1px solid var(--table-seperator);
-  width: 100%;
+  /* width: 100%; */
 }
 
 tr {
@@ -309,7 +313,16 @@ tr {
 
 .detailed-text {
   margin: 0px;
-  padding: 5px;
+  padding: 10px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  border-bottom: 1px solid #1f1f1f;
+  width: 99%;
+}
+
+.detailed-text-nopadding {
+  margin: 0px;
+  padding: 0px;
   font-size: 0.85rem;
   font-weight: normal;
 }
