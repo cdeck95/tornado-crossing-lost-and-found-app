@@ -12,12 +12,13 @@
   --table-seperator: #dcdcdc;
   height: 100dvh;
   width: 100dvw;
-  overflow-y: hidden !important;
+  overflow: hidden !important;
 }
 
 body {
   /* font-family: "Bebas Neue", sans-serif; */
-  overflow-y: hidden !important;
+  overflow: hidden !important;
+  overflow-x: hidden !important;
   height: 100%;
   width: 100%;
   display: flex;
@@ -150,6 +151,11 @@ button {
   color: white;
 }
 
+.icon {
+  cursor: pointer;
+  margin-left: 2.5px;
+}
+
 @media screen and (max-width: 900px) {
   .Menu-responsive {
     display: none;
@@ -178,8 +184,8 @@ button {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   padding: 5px;
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  /* height: 100%; */
   padding-bottom: 10px;
 }
 
@@ -221,6 +227,13 @@ button {
   align-items: center;
   width: 100%;
   height: 100%;
+  overflow: auto !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 /* Style for the container div */
@@ -259,25 +272,33 @@ table {
   border-collapse: collapse;
   text-align: left;
   overflow-y: auto;
+  border: 1px solid var(--table-seperator);
 }
 
 th,
 td {
   padding: 8px;
   text-align: left;
+}
+
+thead,
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+  top: -1px;
+  position: sticky;
+  z-index: 1000 !important;
   border-top: 1px solid var(--table-seperator);
   border-bottom: 1px solid var(--table-seperator);
 }
 
-th {
-  background-color: #f2f2f2;
-  text-align: left;
-  top: 0;
-  position: sticky;
+tr {
+  border-bottom: 1px solid var(--table-seperator);
+  border-top: 1px solid var(--table-seperator);
 }
 
 .table-container {
-  overflow: auto !important;
+  /* overflow: auto !important; */
   height: 100%;
   width: 100%;
 }

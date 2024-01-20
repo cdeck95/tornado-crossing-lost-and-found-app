@@ -48,48 +48,17 @@ function PublicHub() {
             <img src={TextLogo} alt="DRN-Logo" className="logo-text" />
           </div>
           <h1 className="header">{course}</h1>
-          {!isMobile && (
-            <Dropdown>
-              <MenuButton
-                startDecorator={
-                  <DensityMediumIcon className="Navbar-menu-icon" />
-                }
-              >
-                <Typography className="navButtonText">
-                  {selectedIndex === 0 ? "FAQ" : "Inventory"}
-                </Typography>
-              </MenuButton>
-              <Menu>
-                <MenuItem
-                  {...(selectedIndex === 0 && {
-                    selected: true,
-                    variant: "soft",
-                  })}
-                  onClick={createHandleClose(0)}
-                >
-                  FAQ
-                </MenuItem>
-                <MenuItem
-                  selected={selectedIndex === 1}
-                  onClick={createHandleClose(1)}
-                >
-                  Inventory
-                </MenuItem>
-              </Menu>
-            </Dropdown>
-          )}
-        </div>
-        {isMobile && (
           <Dropdown>
             <MenuButton
               startDecorator={
-                <DensityMediumIcon className="Navbar-menu-icon" />
+                <DensityMediumIcon
+                  className="Navbar-menu-icon"
+                  sx={{
+                    marginLeft: "0.5rem !important",
+                  }}
+                />
               }
-            >
-              <Typography className="navButtonText">
-                {selectedIndex === 0 ? "FAQ" : "Inventory"}
-              </Typography>
-            </MenuButton>
+            ></MenuButton>
             <Menu>
               <MenuItem
                 {...(selectedIndex === 0 && {
@@ -108,57 +77,11 @@ function PublicHub() {
               </MenuItem>
             </Menu>
           </Dropdown>
-        )}
-
-        {/* <nav className="Menu-responsive">
-          <ButtonGroup variant="contained" color="primary">
-            <Button
-              onClick={() => switchTab("faq")}
-              color={activeTab === "faq" ? "primary" : "inherit"}
-              className={activeTab === "faq" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
-            >
-              FAQ Page
-            </Button>
-            <Button
-              onClick={() => switchTab("inventory")}
-              color={activeTab === "inventory" ? "primary" : "inherit"}
-              className={activeTab === "inventory" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
-            >
-              Inventory
-            </Button>
-          </ButtonGroup>
-          <div className="Navbar-menu">
-            <DensityMediumIcon className="Navbar-menu-icon" />
-          </div>
-          <div className="Mobile-menu">
-            <ul>
-              <li
-                className="nav-item"
-                onClick={() => switchTab("enterLostDisc")}
-              >
-                Enter Lost Disc
-              </li>
-              <li className="nav-item" onClick={() => switchTab("inventory")}>
-                Inventory
-              </li>
-              <li
-                className="nav-item"
-                onClick={() => switchTab("forSaleInventory")}
-              >
-                For Sale
-              </li>
-            </ul>
-          </div>
-        </nav> */}
+        </div>
       </header>
       <main className="container">
         {selectedIndex === 0 && <FAQ />}
         {selectedIndex === 1 && <PublicInventory />}
-
-        {/* {activeTab === "faq" && <FAQ />}
-        {activeTab === "inventory" && <PublicInventory />} */}
       </main>
     </div>
   );

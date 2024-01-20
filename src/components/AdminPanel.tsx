@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import EnterLostDisc from "./EnterLostDisc";
 import Inventory from "./Inventory";
 import ForSaleInventory from "./ForSaleInventory";
@@ -76,11 +81,16 @@ function AdminPanel() {
     setIsPasswordEntered(false);
   };
 
+  const navigate = useNavigate();
+
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
 
   const createHandleClose = (index: number) => () => {
     if (typeof index === "number") {
       setSelectedIndex(index);
+    }
+    if (index === 3) {
+      navigate("/");
     }
   };
 
@@ -93,62 +103,17 @@ function AdminPanel() {
             <img src={TextLogo} alt="DRN-Logo" className="logo-text" />
           </div>
           <h1 className="header">{course}</h1>
-          {!isMobile && (
-            <Dropdown>
-              <MenuButton
-                startDecorator={
-                  <DensityMediumIcon
-                    className="Navbar-menu-icon"
-                    sx={{
-                      marginLeft: "0.5rem !important",
-                    }}
-                  />
-                }
-              >
-                {/* <Typography className="navButtonText">
-                {selectedIndex === 0 && "Report Lost Disc"}
-                {selectedIndex === 1 && "Inventory"}
-                {selectedIndex === 2 && "For Sale"}
-              </Typography> */}
-              </MenuButton>
-              <Menu>
-                <MenuItem
-                  {...(selectedIndex === 0 && {
-                    selected: true,
-                    variant: "soft",
-                  })}
-                  onClick={createHandleClose(0)}
-                >
-                  Report Lost Disc
-                </MenuItem>
-                <MenuItem
-                  selected={selectedIndex === 1}
-                  onClick={createHandleClose(1)}
-                >
-                  Inventory
-                </MenuItem>
-                <MenuItem
-                  selected={selectedIndex === 2}
-                  onClick={createHandleClose(2)}
-                >
-                  For Sale
-                </MenuItem>
-              </Menu>
-            </Dropdown>
-          )}
-          <div></div>
-        </div>
-        {isMobile && (
           <Dropdown>
             <MenuButton
               startDecorator={
-                <DensityMediumIcon className="Navbar-menu-icon" />
+                <DensityMediumIcon
+                  className="Navbar-menu-icon"
+                  sx={{
+                    marginLeft: "0.5rem !important",
+                  }}
+                />
               }
-            >
-              <Typography className="navButtonText">
-                {selectedIndex === 0 ? "FAQ" : "Inventory"}
-              </Typography>
-            </MenuButton>
+            ></MenuButton>
             <Menu>
               <MenuItem
                 {...(selectedIndex === 0 && {
@@ -171,9 +136,19 @@ function AdminPanel() {
               >
                 For Sale
               </MenuItem>
+              <MenuItem
+                {...(selectedIndex === 3 && {
+                  selected: true,
+                  variant: "soft",
+                })}
+                onClick={createHandleClose(3)}
+              >
+                Public View
+              </MenuItem>
             </Menu>
           </Dropdown>
-        )}
+          <div></div>
+        </div>
       </header>
       {isPasswordEntered ? ( // Render secret content if the password is entered
         <main className="container">

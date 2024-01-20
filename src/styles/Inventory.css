@@ -1,8 +1,9 @@
 /* Styles for the table */
 .inventory-table {
-  /* border-collapse: collapse; */
-  border: none;
-  width: 100%;
+  border-collapse: collapse;
+  /* border: none; */
+  width: 95%;
+  margin: auto;
   table-layout: fixed;
 }
 
@@ -14,18 +15,17 @@
 
 /* Styles for the table headers */
 .table-header {
-  /* background-color: #f2f2f2; */
+  border-top: 1px solid var(--table-seperator);
+  border-bottom: 1px solid var(--table-seperator);
   font-weight: normal;
   padding: 8px;
-  border-bottom: 1px solid #ddd;
   font-family: "Lato Regular";
 }
 
 /* Styles for the table cells */
 .table-cell {
   /* border-bottom: 1px solid #ddd; */
-  width: 20%; /* You can adjust the width as needed for your layout */
-  padding: 5px;
+  padding: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -45,6 +45,7 @@
   margin: auto;
   width: 100%;
   height: 100%;
+  max-width: 1300px;
   display: flex;
   flex-direction: column;
   overflow-y: hidden !important;
@@ -154,4 +155,75 @@
   &:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 0.75rem;
+}
+
+.legend-item span {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7.5px;
+  min-width: 300px;
+  /* width: 500px; */
+}
+
+.filter-row-mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 7.5px;
+  min-width: 300px;
+  /* width: 100dvw; */
+}
+.filter-button {
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.85rem !important;
+  cursor: pointer;
+  color: grey !important;
+  background-color: white !important;
+  border: 1px solid grey !important;
+  border-radius: 30px !important;
+  outline: none;
+  transition: 1s ease-in-out;
+}
+
+/* .filter-button:hover {
+  color: var(--primary-white) !important;
+  border: 1px solid var(--primary-blue) !important;
+  background-color: var(--secondary-blue) !important;
+  border-radius: 30px !important;
+  transition: 0.5s ease-in-out;
+} */
+
+.filter-button-selected {
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.85rem !important;
+  cursor: pointer;
+  background-color: white !important;
+  outline: none;
+  color: var(--primary-white) !important;
+  border: 1px solid var(--primary-blue) !important;
+  background-color: var(--secondary-blue) !important;
+  border-radius: 30px !important;
 }

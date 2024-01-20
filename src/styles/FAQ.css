@@ -34,23 +34,6 @@ h2 {
   align-items: center;
 }
 
-.icon {
-  width: 24px;
-  height: 24px;
-  background-image: url("https://placekitten.com/24/24"); /* Replace with your own icon */
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.open .icon {
-  transform: rotate(90deg);
-}
-
-.closed .icon {
-  transform: rotate(0deg);
-}
-
 .answer {
   font-size: 16px;
   padding: 5px 15px;

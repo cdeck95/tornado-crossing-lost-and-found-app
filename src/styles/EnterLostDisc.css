@@ -1,7 +1,7 @@
 /* EnterLostDisc.css */
 
 .lost-disc-container {
-  max-width: 400px;
+  max-width: 1300px;
   margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
@@ -49,7 +49,7 @@ input {
 .reset-format {
   background-color: #f0efef;
   color: #878787;
-  border: 1px solid ;
+  border: 1px solid;
   border-radius: 3px;
   padding: 5px 10px;
   cursor: pointer;
@@ -129,13 +129,12 @@ input {
     width: 100%;
     align-items: center;
     margin-bottom: 1.2em;
-    
   }
 
   .button {
     width: 165px;
     height: 40px;
-    font-size: 0.80rem !important;
+    font-size: 0.8rem !important;
     border-radius: 3px;
   }
 }
@@ -148,13 +147,12 @@ input {
     justify-content: center;
     align-items: center;
     width: 100%;
-    
   }
 
   .button {
     width: 165px;
     height: 40px;
-    font-size: 0.80rem !important;
+    font-size: 0.8rem !important;
     border-radius: 3px;
   }
 }
@@ -163,7 +161,7 @@ input {
   background-color: rgb(173, 42, 42);
 }
 
-.button-black{
+.button-black {
   background-color: black;
   transition: 0.3s;
   border: 1px solid black;
@@ -178,7 +176,7 @@ input {
 
 .EnterLostDisc {
   font-size: 30px;
-  font-family: "Oswald", sans-serif;;
+  font-family: "Oswald", sans-serif;
   font-weight: 600;
   margin-top: 5px;
 }
