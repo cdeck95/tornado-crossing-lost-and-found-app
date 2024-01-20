@@ -19,23 +19,32 @@ export interface Disc {
   dateFound: string;
   dateTexted?: string | null;
   dateClaimed?: string | null;
-  status: string;
+  status: DiscStateString;
   comments?: string | null;
   color: string;
   pickupDeadline?: string | null;
   brand?: string | null;
   dateSold?: string | null;
 }
+export enum DiscStateString {
+  New = "NEW",
+  Unclaimed = "UNCLAIMED",
+  PendingDropoff = "PENDING_DROPOFF",
+  PendingStorePickup = "PENDING_STORE_PICKUP",
+  PendingCoursePickup = "PENDING_COURSE_PICKUP",
+  Claimed = "CLAIMED",
+  PickupOverdue = "PICKUP_OVERDUE",
+  ForSale = "FOR_SALE",
+  Sold = "SOLD",
+  SoldOffline = "SOLD_OFFLINE",
+  Surrendered = "SURRENDERED",
+}
 
-// export const API_BASE_URL = "https://api.discrescuenetwork.com"; //production URL
-export const API_BASE_URL = "http://127.0.0.1:3001"; // local testing
+export const API_BASE_URL = "https://api.discrescuenetwork.com"; //production URL
+//export const API_BASE_URL = "http://127.0.0.1:3001"; // local testing
 
 function App() {
-  const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
-
-  const switchTab = (tabName: string) => {
-    setActiveTab(tabName);
-  };
+  const course = process.env.REACT_APP_COURSE_NAME;
 
   return (
     <Box

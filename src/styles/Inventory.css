@@ -1,6 +1,7 @@
 /* Styles for the table */
 .inventory-table {
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
+  border: none;
   width: 100%;
   table-layout: fixed;
 }
@@ -13,22 +14,23 @@
 
 /* Styles for the table headers */
 .table-header {
-  background-color: #f2f2f2;
-  font-weight: bold;
+  /* background-color: #f2f2f2; */
+  font-weight: normal;
   padding: 8px;
-  text-align: left;
   border-bottom: 1px solid #ddd;
+  font-family: "Lato Regular";
 }
 
 /* Styles for the table cells */
 .table-cell {
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
   width: 20%; /* You can adjust the width as needed for your layout */
-  text-align: left;
   padding: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: "Lato Light" !important;
+  font-weight: normal;
 }
 
 .past-deadline-row {
@@ -45,8 +47,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  overflow-y: hidden !important;
 }
 
 .col-center {
@@ -55,7 +56,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  width: 80%;
+  /* width: 80%; */
 }
 
 /* Style for the search bar */
@@ -101,7 +102,8 @@
   background: #008060;
   border: 1px solid #ffffff;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
     rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
 }
 

@@ -19,7 +19,7 @@ function FAQ() {
 
   return (
     <div className="faq-page">
-      <h1>Frequently Asked Questions</h1>
+      <h2>Frequently Asked Questions</h2>
 
       {FAQData.map((item, index) => (
         <div className="faq-section" key={index}>

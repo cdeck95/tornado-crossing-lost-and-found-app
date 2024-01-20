@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_BASE_URL, Disc } from "../App";
+import { API_BASE_URL, Disc, DiscStateString } from "../App";
 import "../styles/Inventory.css"; // Import the CSS file
 import { DateTime } from "luxon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import {
   CircularProgress,
   Divider,
@@ -38,6 +40,7 @@ function PublicInventory() {
   const [sortOption, setSortOption] = useState<keyof Disc>("pickupDeadline"); // Set initial sort option
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc"); // Set initial sort direction to DESC
   const [showPastDeadlines, setShowPastDeadlines] = useState(false);
+  const course = process.env.REACT_APP_COURSE_NAME;
 
   const [tooltipIsOpen, setTooltipIsOpen] = useState(false);
 
@@ -73,7 +76,6 @@ function PublicInventory() {
   }
 
   useEffect(() => {
-    const course = "Stafford Woods";
     axios
       .get(`${API_BASE_URL}/inventory`, {
         params: {
@@ -232,128 +234,154 @@ function PublicInventory() {
         {/* </div> */}
       </div>
       <div className="container">
-        <table className="inventory-table">
-          <colgroup>
-            <col style={{ width: "8%" }} />
-            <col style={{ width: "21%" }} /> {/* Adjust the width as needed */}
-            <col style={{ width: "21%" }} /> {/* Adjust the width as needed */}
-            <col style={{ width: "25%" }} /> {/* Adjust the width as needed */}
-            <col style={{ width: "25%" }} /> {/* Adjust the width as needed */}
-          </colgroup>
-          <thead>
-            <tr>
-              <th className="table-header"> </th>
-              {/* <th className="table-header">ID</th>  */}
-              {/* <th className="table-header">Name</th>  */}
-              {/* <th className="table-header">Color</th> 
+        <div className="table-container">
+          <table className="inventory-table">
+            <colgroup>
+              <col style={{ width: "35px" }} />
+              <col style={{ width: "30%" }} />{" "}
+              {/* Adjust the width as needed */}
+              <col style={{ width: "30%" }} />{" "}
+              {/* Adjust the width as needed */}
+              {/* <col style={{ width: "21%" }} />{" "} */}
+              {/* Adjust the width as needed */}
+              <col style={{ width: "37%" }} />{" "}
+              {/* Adjust the width as needed */}
+            </colgroup>
+            <thead>
+              <tr>
+                <th className="table-header"> </th>
+                {/* <th className="table-header">ID</th>  */}
+                {/* <th className="table-header">Name</th>  */}
+                {/* <th className="table-header">Color</th> 
                 <th className="table-header">Bin</th> 
                 <th className="table-header">Date Found</th> 
                 <th className="table-header">Comments</th>  */}
 
-              {renderColumnHeader("name", "Name")}
-              {/* {renderColumnHeader('name', 'Phone Number')} */}
-              {/* <th className="table-header">Phone Number</th>  */}
-              {renderColumnHeader("disc", "Disc")}
-              {renderColumnHeader("dateFound", "Date Found")}
-              {renderColumnHeader("pickupDeadline", "Pickup Deadline")}
+                {renderColumnHeader("name", "Name")}
+                {/* {renderColumnHeader('name', 'Phone Number')} */}
+                {/* <th className="table-header">Phone Number</th>  */}
+                {renderColumnHeader("disc", "Disc")}
+                {/* {renderColumnHeader("dateFound", "Date Found")} */}
+                {renderColumnHeader("pickupDeadline", "Pickup Deadline")}
 
-              {/* 
+                {/* 
                 <th className="table-header">Disc</th> 
                 
                 <th className="table-header">Actions</th>  */}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredInventory.map((disc) => (
-              <React.Fragment key={disc.id}>
-                <tr
-                  onClick={() => toggleRow(disc.id!)}
-                  className={
-                    new Date(disc.pickupDeadline!) < new Date()
-                      ? "past-deadline-row"
-                      : ""
-                  }
-                >
-                  <td className="table-cell">
-                    {expandedRows.includes(disc.id!) ? "▼" : "▶"}
-                  </td>
-                  {/* <td className="table-cell">{disc.id}</td> */}
-                  <td className="table-cell">{disc.name}</td>
-                  {/* <td className="table-cell">{formatPhoneNumber(disc.phoneNumber)}</td> */}
-                  <td className="table-cell">{disc.disc}</td>
-                  <td className="table-cell">{disc.dateFound}</td>
-                  <td className="table-cell">{disc.pickupDeadline}</td>
-                  <td className="table-cell"></td>
-                </tr>
-                {expandedRows.includes(disc.id!) && (
-                  <tr>
-                    <td colSpan={8}>
-                      {" "}
-                      {/* Use appropriate colspan */}
-                      <div>
-                        <p>
-                          <strong>ID:</strong> {disc.id}
-                        </p>
-                        <p>
-                          <strong>Course: </strong>
-                          {disc.course}
-                        </p>
-                        <p>
-                          <strong>Name: </strong>
-                          {maskFirstName(disc.name)}
-                        </p>
-                        <p>
-                          <strong>Phone Number: </strong>
-                          {maskPhoneNumber(disc.phoneNumber)}
-                        </p>
-                        <p>
-                          <strong>Brand: </strong>
-                          {disc.brand}
-                        </p>
-                        <p>
-                          <strong>Disc: </strong>
-                          {disc.disc}
-                        </p>
-                        <p>
-                          <strong>Color: </strong>
-                          {disc.color}
-                        </p>
-                        <p>
-                          <strong>Bin: </strong>
-                          {disc.bin}
-                        </p>
-                        <p>
-                          <strong>Date Found: </strong>
-                          {disc.dateFound}
-                        </p>
-                        <p>
-                          <strong>Date Texted: </strong>
-                          {disc.dateTexted}
-                        </p>
-                        <p>
-                          <strong>Date Claimed: </strong>
-                          {disc.dateClaimed}
-                        </p>
-                        <p>
-                          <strong>Status: </strong>
-                          {disc.status}
-                        </p>
-                        <p>
-                          <strong>Pickup Deadline: </strong>
-                          {disc.pickupDeadline}
-                        </p>
-                        <p>
-                          <strong>Comments: </strong>
-                          {disc.comments}
-                        </p>
-                      </div>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredInventory.map((disc) => (
+                <React.Fragment key={disc.id}>
+                  <tr
+                    onClick={() => toggleRow(disc.id!)}
+                    // className={
+                    //   new Date(disc.pickupDeadline!) < new Date()
+                    //     ? "past-deadline-row"
+                    //     : ""
+                    // }
+                  >
+                    <td className="table-cell">
+                      {expandedRows.includes(disc.id!) ? "▼" : "▶"}
                     </td>
+                    {/* <td className="table-cell">{disc.id}</td> */}
+                    <td className="table-cell">{disc.name}</td>
+                    {/* <td className="table-cell">{formatPhoneNumber(disc.phoneNumber)}</td> */}
+                    <td className="table-cell">{disc.disc}</td>
+                    {/* <td className="table-cell">{disc.dateFound}</td> */}
+                    <td className="table-cell">
+                      {disc.pickupDeadline}
+                      {new Date(disc.pickupDeadline!) < new Date() && (
+                        <FontAwesomeIcon
+                          icon={faCircle}
+                          style={{ color: "red", marginLeft: "10px" }}
+                        />
+                      )}
+                      {disc.status === DiscStateString.New && (
+                        <FontAwesomeIcon
+                          icon={faCircle}
+                          style={{ color: "orange", marginLeft: "10px" }}
+                        />
+                      )}
+                      {disc.status !== DiscStateString.New &&
+                        new Date(disc.pickupDeadline!) >= new Date() && (
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "yellow", marginLeft: "10px" }}
+                          />
+                        )}
+                    </td>
+                    <td className="table-cell"></td>
                   </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-          {/* <tbody>
+                  {expandedRows.includes(disc.id!) && (
+                    <tr>
+                      <td colSpan={8}>
+                        {" "}
+                        {/* Use appropriate colspan */}
+                        <div className="column-table">
+                          <p className="detailed-text">
+                            <strong>ID:</strong> {disc.id}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Course: </strong>
+                            {disc.course}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Name: </strong>
+                            {maskFirstName(disc.name)}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Phone Number: </strong>
+                            {maskPhoneNumber(disc.phoneNumber)}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Brand: </strong>
+                            {disc.brand}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Disc: </strong>
+                            {disc.disc}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Color: </strong>
+                            {disc.color}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Bin: </strong>
+                            {disc.bin}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Date Found: </strong>
+                            {disc.dateFound}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Date Texted: </strong>
+                            {disc.dateTexted}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Date Claimed: </strong>
+                            {disc.dateClaimed}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Status: </strong>
+                            {disc.status}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Pickup Deadline: </strong>
+                            {disc.pickupDeadline}
+                          </p>
+                          <p className="detailed-text">
+                            <strong>Comments: </strong>
+                            {disc.comments}
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+            {/* <tbody>
             {filteredInventory.map((disc: Disc) => (
             <tr key={disc.id}>
               {editedDiscID===disc.id
@@ -479,7 +507,8 @@ function PublicInventory() {
             </tr>
           ))}
         </tbody> */}
-        </table>
+          </table>
+        </div>
         <BackToTopButton />
       </div>
     </div>

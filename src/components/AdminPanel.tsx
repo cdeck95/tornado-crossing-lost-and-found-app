@@ -12,21 +12,22 @@ import {
   useTheme,
   IconButton,
 } from "@mui/material"; // Import Button and ButtonGroup from MUI
-import ExpiredPickups from "./ExpiredPickups";
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
-
+import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 import ColorLogoWhite from "../Images/Color_Logo_White.png";
 import TextLogo from "../Images/Text_Logo.png";
-import { ForkRight } from "@mui/icons-material";
-
+import MenuButton from "@mui/joy/MenuButton";
+import Menu from "@mui/joy/Menu";
+import MenuItem from "@mui/joy/MenuItem";
+import Dropdown from "@mui/joy/Dropdown";
 
 function AdminPanel() {
   const REACT_APP_ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
   const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
   const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
-  
+  const course = process.env.REACT_APP_COURSE_NAME;
+
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
 
@@ -75,80 +76,110 @@ function AdminPanel() {
     setIsPasswordEntered(false);
   };
 
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
+
+  const createHandleClose = (index: number) => () => {
+    if (typeof index === "number") {
+      setSelectedIndex(index);
+    }
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <div className="Header-content">
-        <div className="Logo">
-          <img src={ColorLogoWhite} alt="" style={{ 
-            width: "50px"
-          }}/>
-          <img src={TextLogo} alt="" style={{ 
-            width: "90px", 
-            height: "40px",
-            marginTop: "5px"  
-          }}/>
-        </div>
-        <Typography
-          sx={{
-            color: "white",
-            fontWeight: 800,
-            fontFamily: "Oswald",
-            marginTop: "10px",
-            fontSize: isMobile ? "1.2rem" : "1.2rem",
-          }}
-        >
-          TRANQUILITY TRAILS
-        </Typography>
-        <div className="Navbar-menu">
-        <DensityMediumIcon className="Navbar-menu-icon"/>
-        </div>
-        </div>
-        <nav className="Menu-responsive">
-          <ButtonGroup variant="contained" color="primary">
-            <Button
-              onClick={() => switchTab("enterLostDisc")}
-              color={activeTab === "enterLostDisc" ? "primary" : "inherit"}
-              className={activeTab === "enterLostDisc" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
-            >
-              Enter Lost Disc
-            </Button>
-            <Button
-              onClick={() => switchTab("inventory")}
-              color={activeTab === "inventory" ? "primary" : "inherit"}
-              className={activeTab === "inventory" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
-            >
-              Inventory
-            </Button>
-            <Button
-              onClick={() => switchTab("forSaleInventory")}
-              color={activeTab === "forSaleInventory" ? "primary" : "inherit"}
-              className={activeTab === "forSaleInventory" ? "active" : ""}
-              sx={{ fontSize: isMobile ? ".60rem" : ".68rem" }}
-            >
-              For Sale
-            </Button>
-          </ButtonGroup>
-          <div className="Navbar-menu">
-        <DensityMediumIcon className="Navbar-menu-icon"/>
-        </div>
-          <div className="Mobile-menu" >
-            <ul>
-              <li className="nav-item" onClick={() => switchTab("enterLostDisc")}>Enter Lost Disc</li>
-              <li className="nav-item" onClick={() => switchTab("inventory")}>Inventory</li>
-              <li className="nav-item" onClick={() => switchTab("forSaleInventory")}>For Sale</li>
-            </ul>
+          <div className="Logo-Container">
+            <img src={ColorLogoWhite} alt="DRN-Logo" className="logo" />
+            <img src={TextLogo} alt="DRN-Logo" className="logo-text" />
           </div>
-        </nav>
+          <h1 className="header">{course}</h1>
+          {!isMobile && (
+            <Dropdown>
+              <MenuButton
+                startDecorator={
+                  <DensityMediumIcon
+                    className="Navbar-menu-icon"
+                    sx={{
+                      marginLeft: "0.5rem !important",
+                    }}
+                  />
+                }
+              >
+                {/* <Typography className="navButtonText">
+                {selectedIndex === 0 && "Report Lost Disc"}
+                {selectedIndex === 1 && "Inventory"}
+                {selectedIndex === 2 && "For Sale"}
+              </Typography> */}
+              </MenuButton>
+              <Menu>
+                <MenuItem
+                  {...(selectedIndex === 0 && {
+                    selected: true,
+                    variant: "soft",
+                  })}
+                  onClick={createHandleClose(0)}
+                >
+                  Report Lost Disc
+                </MenuItem>
+                <MenuItem
+                  selected={selectedIndex === 1}
+                  onClick={createHandleClose(1)}
+                >
+                  Inventory
+                </MenuItem>
+                <MenuItem
+                  selected={selectedIndex === 2}
+                  onClick={createHandleClose(2)}
+                >
+                  For Sale
+                </MenuItem>
+              </Menu>
+            </Dropdown>
+          )}
+          <div></div>
+        </div>
+        {isMobile && (
+          <Dropdown>
+            <MenuButton
+              startDecorator={
+                <DensityMediumIcon className="Navbar-menu-icon" />
+              }
+            >
+              <Typography className="navButtonText">
+                {selectedIndex === 0 ? "FAQ" : "Inventory"}
+              </Typography>
+            </MenuButton>
+            <Menu>
+              <MenuItem
+                {...(selectedIndex === 0 && {
+                  selected: true,
+                  variant: "soft",
+                })}
+                onClick={createHandleClose(0)}
+              >
+                Report Lost Disc
+              </MenuItem>
+              <MenuItem
+                selected={selectedIndex === 1}
+                onClick={createHandleClose(1)}
+              >
+                Inventory
+              </MenuItem>
+              <MenuItem
+                selected={selectedIndex === 2}
+                onClick={createHandleClose(2)}
+              >
+                For Sale
+              </MenuItem>
+            </Menu>
+          </Dropdown>
+        )}
       </header>
       {isPasswordEntered ? ( // Render secret content if the password is entered
         <main className="container">
-          {activeTab === "enterLostDisc" && <EnterLostDisc />}
-          {activeTab === "inventory" && <Inventory />}
-          {activeTab === "forSaleInventory" && <ForSaleInventory />}
+          {selectedIndex === 0 && <EnterLostDisc />}
+          {selectedIndex === 1 && <Inventory />}
+          {selectedIndex === 2 && <ForSaleInventory />}
         </main>
       ) : (
         // Render password form if the password is not entered

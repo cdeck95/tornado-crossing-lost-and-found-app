@@ -1,44 +1,154 @@
-.App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap&family=Roboto");
+
+:root,
+#root {
+  --primary-blue: #005daa;
+  --secondary-blue: #228de5;
+  --primary-black: #000000;
+  --primary-red: #d31245;
+  --primary-white: #ffffff;
+  --primary-grey: #e3e3e3;
+  --primary-green: #55de1f;
+  --table-seperator: #dcdcdc;
+  height: 100dvh;
+  width: 100dvw;
+  overflow-y: hidden !important;
+}
+
+body {
+  /* font-family: "Bebas Neue", sans-serif; */
+  overflow-y: hidden !important;
   height: 100%;
   width: 100%;
-  justify-content: center;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("../fonts/BebasNeue-Thin.eot");
+  src:
+    url("../fonts/BebasNeue-Thin.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/BebasNeue-Thin.woff2") format("woff2"),
+    url("../fonts/BebasNeue-Thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("../fonts/BebasNeueLight.eot");
+  src:
+    url("../fonts/BebasNeueLight.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/BebasNeueLight.woff2") format("woff2"),
+    url("../fonts/BebasNeueLight.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("../fonts/BebasNeueRegular.eot");
+  src:
+    url("../fonts/BebasNeueRegular.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/BebasNeueRegular.woff2") format("woff2"),
+    url("../fonts/BebasNeueRegular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.App {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden !important;
+  /* height: 100%;
+  width: 100%; */
 }
 
 .Header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 60px;
+  gap: 30px;
 }
 
-.Logo {
+header {
+  font-family: "Bebas Neue";
+  color: white;
+}
+
+.header {
+  font-size: 1.5rem;
+  font-weight: 400;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-} 
+  justify-content: center;
+}
 
 button {
-  width: 147px;
-  height: 35px;
+  font-family: "Bebas Neue Light";
 }
 
-.Navbar-menu-icon{
-  cursor: pointer; 
-    color: white;
-    padding-left: -10px;
-    margin-top: 12px;
+.Logo-Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
 }
 
-  .Navbar-menu {
-    display: none;
- }
+.logo {
+  height: auto;
+  width: 3em;
+  object-fit: contain;
+}
 
-  .Mobile-menu {
-    display: none;
-  }
+.logo-text {
+  height: 1.5em;
+  width: auto;
+}
+
+.Navbar-menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  padding: 0px;
+  margin-left: "0.5rem !important";
+  /* padding-right: 15px; */
+  /* margin-top: 12px; */
+}
+
+.Navbar-menu {
+  cursor: pointer;
+  color: white;
+  /* display: none; */
+}
+
+.Navbar-menu p {
+  color: white;
+}
+
+.Mobile-menu {
+  display: none;
+}
+
+.navButtonText {
+  font-family: "Bebas Neue Light";
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: white;
+}
 
 @media screen and (max-width: 900px) {
   .Menu-responsive {
@@ -47,9 +157,7 @@ button {
   .Navbar-menu {
     display: block;
   }
-  
 }
-
 
 .App-logo {
   height: 40vmin;
@@ -70,8 +178,9 @@ button {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   padding: 5px;
-  padding-bottom: 20px;
   width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
 }
 
 .App-link {
@@ -143,4 +252,47 @@ button {
 
 .fab-button:hover {
   background-color: #0056b3; /* Hover background color */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  overflow-y: auto;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-top: 1px solid var(--table-seperator);
+  border-bottom: 1px solid var(--table-seperator);
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+  top: 0;
+  position: sticky;
+}
+
+.table-container {
+  overflow: auto !important;
+  height: 100%;
+  width: 100%;
+}
+
+.detailed-text {
+  margin: 0px;
+  padding: 5px;
+  font-size: 0.85rem;
+  font-weight: normal;
+}
+
+.column-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import CameraRollOutlinedIcon from '@mui/icons-material/CameraRollOutlined';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import CameraRollOutlinedIcon from "@mui/icons-material/CameraRollOutlined";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import "../styles/EnterLostDisc.css"; // Import the CSS file
 // import { API_BASE_URL } from "../App";
@@ -24,8 +24,10 @@ interface DiscData {
 }
 
 function EnterLostDisc() {
+  const course = process.env.REACT_APP_COURSE_NAME;
+
   const [discData, setDiscData] = useState<DiscData>({
-    course: "Stafford Woods",
+    course: course!,
     name: "",
     disc: "",
     phoneNumber: "",
@@ -255,24 +257,24 @@ function EnterLostDisc() {
     //     // Set success message with the ID of the row from the DB
     //     setSuccessMessage(`Disc added with ID ${response.data.id}`);
 
-    //     // Clear the form and loading state
-    //     setDiscData({
-    //       course: "Stafford Woods",
-    //       name: "",
-    //       disc: "",
-    //       phoneNumber: "",
-    //       bin: discData.bin, //don't overwrite the bin number
-    //       comments: "",
-    //       dateFound: new Date().toISOString().split("T")[0],
-    //       color: "",
-    //       brand: discData.brand, //don't overwrite the brand
-    //     });
-    //     setIsLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error adding disc:", error);
-    //     setIsLoading(false); // Clear loading state on error
+    //   // Clear the form and loading state
+    //   setDiscData({
+    //     course: course!,
+    //     name: "",
+    //     disc: "",
+    //     phoneNumber: "",
+    //     bin: discData.bin, //don't overwrite the bin number
+    //     comments: "",
+    //     dateFound: new Date().toISOString().split("T")[0],
+    //     color: "",
+    //     brand: discData.brand, //don't overwrite the brand
     //   });
+    //   setIsLoading(false);
+    // })
+    // .catch((error) => {
+    //   console.error("Error adding disc:", error);
+    //   setIsLoading(false); // Clear loading state on error
+    // });
   };
 
   const handleCameraButtonClick = () => {
@@ -297,7 +299,10 @@ function EnterLostDisc() {
           <CameraRollOutlinedIcon className="button-icon-camera" />
           <span className="button-text">USE CAMERA</span>
         </button>
-        <button className="button button-black" onClick={handleManualButtonClick}>
+        <button
+          className="button button-black"
+          onClick={handleManualButtonClick}
+        >
           <CreateOutlinedIcon className="button-icon-pencil" />
           <span className="button-text">ENTER MANUALLY</span>
         </button>
@@ -443,17 +448,15 @@ function EnterLostDisc() {
             />
           </div>
           <div className="form-buttons-container">
-          <button 
-            type="submit"
-            className="reset-format">
-             Reset Form        
-          </button>
-          <button
-            type="submit"
-            className={`submit-button ${isLoading ? "loading" : ""}`}
-          >
-            {isLoading ? <CircularProgress /> : "Submit Disc"}
-          </button>
+            <button type="submit" className="reset-format">
+              Reset Form
+            </button>
+            <button
+              type="submit"
+              className={`submit-button ${isLoading ? "loading" : ""}`}
+            >
+              {isLoading ? <CircularProgress /> : "Submit Disc"}
+            </button>
           </div>
           {successMessage && (
             <p className="success-message">{successMessage}</p>

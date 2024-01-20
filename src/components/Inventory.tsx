@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { API_BASE_URL, Disc } from "../App";
+import { API_BASE_URL, Disc, DiscStateString } from "../App";
 import "../styles/Inventory.css"; // Import the CSS file
 import { DateTime } from "luxon";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import {
   Box,
   CircularProgress,
@@ -49,6 +51,7 @@ function Inventory() {
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const [refreshing, setRefreshing] = useState(false);
+  const course = process.env.REACT_APP_COURSE_NAME!;
 
   // const handleRefresh = useCallback(() => {
   //   getInventory();
@@ -56,7 +59,7 @@ function Inventory() {
   // }, []);
 
   const handleRefresh = async () => {
-    getInventory("Stafford Woods");
+    getInventory(course);
   };
 
   const toggleRow = (rowId: RowId) => {
@@ -141,7 +144,7 @@ function Inventory() {
   };
 
   useEffect(() => {
-    getInventory("Stafford Woods");
+    getInventory(course);
   }, [searchQuery, sortDirection, sortOption]);
 
   const markAsClaimed = (discId: string) => {
@@ -190,22 +193,6 @@ function Inventory() {
     setEditedDisc(null);
     setEditedDiscID(-1);
   };
-
-  // const handleSort = (event: SelectChangeEvent<string>) => {
-  //   const selectedOption = event.target.value as keyof Disc;
-  //   console.log('Selected Option:', selectedOption);
-  //   setSortOption(selectedOption);
-  // };
-
-  // const handleSortDirectionChange = (event: SelectChangeEvent<string>) => {
-  //   const selectedDirection = event.target.value as 'asc' | 'desc';
-  //   console.log('Selected Direction:', selectedDirection);
-  //   setSortDirection(selectedDirection);
-  // };
-
-  // const toggleShowPastDeadlines = () => {
-  //   setShowPastDeadlines(!showPastDeadlines);
-  // };
 
   const listForSale = (discId: string, course: string) => {
     setIsLoading(true);
@@ -318,429 +305,432 @@ function Inventory() {
                 <SearchIcon />
               </IconButton>
             </Paper>
-            {/* <Box className="sort-options" sx={{ marginTop: isMobile? "15px" : "0px" }}> */}
-            {/* <FormControl sx={{ marginRight: "15px", marginLeft: "15px"}}>
-                <InputLabel>Sort By</InputLabel>
-                <Select value={sortOption} onChange={handleSort}>
-                  <MenuItem value="dateFound">Date Found</MenuItem>
-                  <MenuItem value="name">Name</MenuItem>
-                  <MenuItem value="pickupDeadline">Pickup Deadline</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl sx={{ marginRight: "15px", marginLeft: "15px"}}>
-                <InputLabel>Sort Direction</InputLabel>
-                <Select value={sortDirection} onChange={handleSortDirectionChange}>
-                  <MenuItem value="asc">Ascending</MenuItem>
-                  <MenuItem value="desc">Descending</MenuItem>
-                </Select>
-              </FormControl> */}
-            {/* <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={showPastDeadlines}
-                    onChange={toggleShowPastDeadlines}
-                    color="primary"
-                  />
-                }
-                label="Show Expired Pickups"
-              />
-            </Box> */}
           </div>
         </div>
         <div className="container">
           <div className="inventory-count">
             Total Discs: {filteredInventory.length}
           </div>
-          <table className="inventory-table" style={{ tableLayout: "fixed" }}>
-            <colgroup>
-              <col style={{ width: "8%" }} />
-              <col style={{ width: "21%" }} />{" "}
-              {/* Adjust the width as needed */}
-              <col style={{ width: "21%" }} />{" "}
-              {/* Adjust the width as needed */}
-              <col style={{ width: "25%" }} />{" "}
-              {/* Adjust the width as needed */}
-              <col style={{ width: "25%" }} />{" "}
-              {/* Adjust the width as needed */}
-            </colgroup>
-            <thead>
-              <tr>
-                <th className="table-header"> </th>
-                {/* <th className="table-header">ID</th>  */}
-                {/* <th className="table-header">Name</th>  */}
-                {/* <th className="table-header">Color</th> 
+          <div className="table-container">
+            <table className="inventory-table" style={{ tableLayout: "fixed" }}>
+              <colgroup>
+                <col style={{ width: "35px" }} />
+                <col style={{ width: "30%" }} />{" "}
+                {/* Adjust the width as needed */}
+                <col style={{ width: "30%" }} />{" "}
+                {/* Adjust the width as needed */}
+                {/* <col style={{ width: "21%" }} />{" "} */}
+                {/* Adjust the width as needed */}
+                <col style={{ width: "37%" }} />{" "}
+                {/* Adjust the width as needed */}
+              </colgroup>
+              <thead>
+                <tr>
+                  <th className="table-header"> </th>
+                  {/* <th className="table-header">ID</th>  */}
+                  {/* <th className="table-header">Name</th>  */}
+                  {/* <th className="table-header">Color</th> 
                 <th className="table-header">Bin</th> 
                 <th className="table-header">Date Found</th> 
                 <th className="table-header">Comments</th>  */}
 
-                {renderColumnHeader("name", "Name")}
-                {/* {renderColumnHeader('name', 'Phone Number')} */}
-                {/* <th className="table-header">Phone Number</th>  */}
-                {renderColumnHeader("disc", "Disc")}
-                {renderColumnHeader("dateFound", "Date Found")}
-                {renderColumnHeader("pickupDeadline", "Pickup Deadline")}
+                  {renderColumnHeader("name", "Name")}
+                  {/* {renderColumnHeader('name', 'Phone Number')} */}
+                  {/* <th className="table-header">Phone Number</th>  */}
+                  {renderColumnHeader("disc", "Disc")}
+                  {/* {renderColumnHeader("dateFound", "Date Found")} */}
+                  {renderColumnHeader("pickupDeadline", "Pickup Deadline")}
 
-                {/* 
+                  {/* 
                 <th className="table-header">Disc</th> 
                 
                 <th className="table-header">Actions</th>  */}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredInventory.map((disc) => (
-                <React.Fragment key={disc.id}>
-                  <tr
-                    onClick={() => toggleRow(disc.id!)}
-                    className={
-                      new Date(disc.pickupDeadline!) < new Date()
-                        ? "past-deadline-row"
-                        : ""
-                    }
-                  >
-                    <td className="table-cell">
-                      {expandedRows.includes(disc.id!) ? "▼" : "▶"}
-                    </td>
-                    {/* <td className="table-cell">{disc.id}</td> */}
-                    <td className="table-cell">{disc.name}</td>
-                    {/* <td className="table-cell">{formatPhoneNumber(disc.phoneNumber)}</td> */}
-                    <td className="table-cell">{disc.disc}</td>
-                    <td className="table-cell">{disc.dateFound}</td>
-                    <td className="table-cell">{disc.pickupDeadline}</td>
-                    <td className="table-cell"></td>
-                  </tr>
-                  {/* Additional details row */}
-                  {expandedRows.includes(disc.id!) && (
-                    <tr>
-                      <td colSpan={8}>
-                        {" "}
-                        {/* Use appropriate colspan */}
-                        <div>
-                          {/* Display all fields related to the disc here */}
-                          {successMessage && disc.id === claimedDisc && (
-                            <div className="success-message">
-                              {successMessage}
-                            </div>
-                          )}
-                          {deleteSuccessMessage && (
-                            <div className="success-message">
-                              {deleteSuccessMessage}
-                            </div>
-                          )}
-                          {deleteFailureMessage && (
-                            <div className="error-message">
-                              {deleteFailureMessage}
-                            </div>
-                          )}
-                          {editedDiscID === disc.id ? (
-                            <SaveOutlinedIcon
-                              sx={{ cursor: "pointer", marginRight: "10px" }}
-                              onClick={stopEditing}
-                            ></SaveOutlinedIcon>
-                          ) : (
-                            <EditOutlinedIcon
-                              sx={{ cursor: "pointer" }}
-                              onClick={() => startEditing(disc)}
-                            ></EditOutlinedIcon>
-                          )}
-                          <DeleteIcon
-                            onClick={() => handleDeleteClick()}
-                            sx={{
-                              marginLeft: "20px",
-                              marginTop: "5px",
-                              cursor: "pointer",
-                            }}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredInventory.map((disc) => (
+                  <React.Fragment key={disc.id}>
+                    <tr
+                      onClick={() => toggleRow(disc.id!)}
+                      // className={
+                      //   new Date(disc.pickupDeadline!) < new Date()
+                      //     ? "past-deadline-row"
+                      //     : ""
+                      // }
+                    >
+                      <td className="table-cell">
+                        {expandedRows.includes(disc.id!) ? "▼" : "▶"}
+                      </td>
+                      {/* <td className="table-cell">{disc.id}</td> */}
+                      <td className="table-cell">{disc.name}</td>
+                      {/* <td className="table-cell">{formatPhoneNumber(disc.phoneNumber)}</td> */}
+                      <td className="table-cell">{disc.disc}</td>
+                      {/* <td className="table-cell">{disc.dateFound}</td> */}
+                      <td className="table-cell">
+                        {disc.pickupDeadline}
+                        {new Date(disc.pickupDeadline!) < new Date() && (
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "red", marginLeft: "10px" }}
                           />
-                          <p>
-                            <strong>ID:</strong> {disc.id}
-                          </p>
-                          <p>
-                            <strong>Course: </strong>
-                            {disc.course}
-                          </p>
+                        )}
+                        {disc.status === DiscStateString.New && (
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            style={{ color: "orange", marginLeft: "10px" }}
+                          />
+                        )}
+                        {disc.status !== DiscStateString.New &&
+                          new Date(disc.pickupDeadline!) >= new Date() && (
+                            <FontAwesomeIcon
+                              icon={faCircle}
+                              style={{ color: "yellow", marginLeft: "10px" }}
+                            />
+                          )}
+                      </td>
+                      <td className="table-cell"></td>
+                    </tr>
+                    {/* Additional details row */}
+                    {expandedRows.includes(disc.id!) && (
+                      <tr>
+                        <td colSpan={8}>
+                          {" "}
+                          {/* Use appropriate colspan */}
                           <div>
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
+                            {/* Display all fields related to the disc here */}
+                            {successMessage && disc.id === claimedDisc && (
+                              <div className="success-message">
+                                {successMessage}
+                              </div>
+                            )}
+                            {deleteSuccessMessage && (
+                              <div className="success-message">
+                                {deleteSuccessMessage}
+                              </div>
+                            )}
+                            {deleteFailureMessage && (
+                              <div className="error-message">
+                                {deleteFailureMessage}
+                              </div>
+                            )}
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <SaveOutlinedIcon
+                                  sx={{
+                                    cursor: "pointer",
+                                    marginRight: "10px",
+                                  }}
+                                  onClick={stopEditing}
+                                ></SaveOutlinedIcon>
+                              ) : (
+                                <EditOutlinedIcon
+                                  sx={{ cursor: "pointer" }}
+                                  onClick={() => startEditing(disc)}
+                                ></EditOutlinedIcon>
+                              )}
+                              <DeleteIcon
+                                onClick={() => handleDeleteClick()}
                                 sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Name"
-                                defaultValue={disc.name}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.name = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    name: e.target.value,
-                                  });
+                                  marginLeft: "20px",
+                                  marginTop: "5px",
+                                  cursor: "pointer",
                                 }}
                               />
-                            ) : (
-                              <p>
-                                <strong>Name: </strong>
-                                {disc.name}
+                            </div>
+                            <div className="row">
+                              <p className="detailed-text">
+                                <strong>ID:</strong> {disc.id}
                               </p>
-                            )}
-                          </div>
-                          <div>
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Phone Number"
-                                defaultValue={formatPhoneNumber(
-                                  disc.phoneNumber
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.phoneNumber = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    phoneNumber: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Phone Number: </strong>
-                                {formatPhoneNumber(disc.phoneNumber)}
+                            </div>
+                            <div className="row">
+                              <p className="detailed-text">
+                                <strong>Course: </strong>
+                                {disc.course}
                               </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Disc Brand"
-                                defaultValue={disc.brand}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.brand = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    brand: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Brand: </strong>
-                                {disc.brand}
-                              </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Disc Name"
-                                defaultValue={disc.disc}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.disc = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    disc: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Disc: </strong>
-                                {disc.disc}
-                              </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Color"
-                                defaultValue={disc.color}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.color = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    color: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Color: </strong>
-                                {disc.color}
-                              </p>
-                            )}
-                          </div>
-                          <div>
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Bin"
-                                defaultValue={disc.bin}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.bin = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    bin: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Bin: </strong>
-                                {disc.bin}
-                              </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Date Found"
-                                defaultValue={disc.dateFound}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.dateFound = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    dateFound: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Date Found: </strong>
-                                {disc.dateFound}
-                              </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Date Texted"
-                                defaultValue={disc.dateTexted}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.dateTexted = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    dateTexted: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Date Texted: </strong>
-                                {disc.dateTexted}
-                              </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
-                                sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                                label="Date Claimed"
-                                defaultValue={disc.dateClaimed}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.dateClaimed = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    dateClaimed: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Date Claimed: </strong>
-                                {disc.dateClaimed}
-                              </p>
-                            )}
-                          </div>
-                          <div className="row">
-                            {/* {editedDiscID === disc.id ? (
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Name"
+                                  defaultValue={disc.name}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.name = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      name: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Name: </strong>
+                                  {disc.name}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Phone Number"
+                                  defaultValue={formatPhoneNumber(
+                                    disc.phoneNumber
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.phoneNumber = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      phoneNumber: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Phone Number: </strong>
+                                  {formatPhoneNumber(disc.phoneNumber)}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Disc Brand"
+                                  defaultValue={disc.brand}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.brand = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      brand: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Brand: </strong>
+                                  {disc.brand}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Disc Name"
+                                  defaultValue={disc.disc}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.disc = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      disc: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Disc: </strong>
+                                  {disc.disc}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Color"
+                                  defaultValue={disc.color}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.color = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      color: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Color: </strong>
+                                  {disc.color}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Bin"
+                                  defaultValue={disc.bin}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.bin = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      bin: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Bin: </strong>
+                                  {disc.bin}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Date Found"
+                                  defaultValue={disc.dateFound}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.dateFound = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      dateFound: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Date Found: </strong>
+                                  {disc.dateFound}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Date Texted"
+                                  defaultValue={disc.dateTexted}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.dateTexted = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      dateTexted: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Date Texted: </strong>
+                                  {disc.dateTexted}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Date Claimed"
+                                  defaultValue={disc.dateClaimed}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.dateClaimed = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      dateClaimed: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Date Claimed: </strong>
+                                  {disc.dateClaimed}
+                                </p>
+                              )}
+                            </div>
+                            <div className="row">
+                              {/* {editedDiscID === disc.id ? (
                               <TextField
                                 id="outlined-uncontrolled"
                                 sx={{ marginTop: "10px", marginBottom: "10px", marginLeft: "auto", marginRight: "auto", justifyContent: "center", alignItems: "center"}}
@@ -752,14 +742,14 @@ function Inventory() {
                                   }}
                               />
                             ) : ( */}
-                            <p>
-                              <strong>Status: </strong>
-                              {disc.status}
-                            </p>
-                            {/* )} */}
-                          </div>
-                          <div className="row">
-                            {/* {editedDiscID === disc.id ? (
+                              <p className="detailed-text">
+                                <strong>Status: </strong>
+                                {disc.status}
+                              </p>
+                              {/* )} */}
+                            </div>
+                            <div className="row">
+                              {/* {editedDiscID === disc.id ? (
                               <TextField
                                 id="outlined-uncontrolled"
                                 sx={{ marginTop: "10px", marginBottom: "10px", marginLeft: "auto", marginRight: "auto", justifyContent: "center", alignItems: "center"}}
@@ -771,105 +761,106 @@ function Inventory() {
                                   }}
                               />
                             ) : ( */}
-                            <p>
-                              <strong>Pickup Deadline: </strong>
-                              {disc.pickupDeadline}
-                            </p>
-                            {/* )} */}
-                          </div>
-                          <div className="row">
-                            {editedDiscID === disc.id ? (
-                              <TextField
-                                id="outlined-uncontrolled"
+                              <p className="detailed-text">
+                                <strong>Pickup Deadline: </strong>
+                                {disc.pickupDeadline}
+                              </p>
+                              {/* )} */}
+                            </div>
+                            <div className="row">
+                              {editedDiscID === disc.id ? (
+                                <TextField
+                                  id="outlined-uncontrolled"
+                                  sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                  label="Comments"
+                                  defaultValue={disc.comments}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    disc.comments = e.target.value;
+                                    setEditedDisc({
+                                      ...disc,
+                                      comments: e.target.value,
+                                    });
+                                  }}
+                                />
+                              ) : (
+                                <p className="detailed-text">
+                                  <strong>Comments: </strong>
+                                  {disc.comments}
+                                </p>
+                              )}
+                            </div>
+                            {isLoading ? (
+                              <div>
+                                <CircularProgress />
+                              </div>
+                            ) : (
+                              <Box
                                 sx={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  marginLeft: "auto",
-                                  marginRight: "auto",
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  width: "100%",
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
-                                label="Comments"
-                                defaultValue={disc.comments}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  disc.comments = e.target.value;
-                                  setEditedDisc({
-                                    ...disc,
-                                    comments: e.target.value,
-                                  });
-                                }}
-                              />
-                            ) : (
-                              <p>
-                                <strong>Comments: </strong>
-                                {disc.comments}
-                              </p>
-                            )}
-                          </div>
-                          {isLoading ? (
-                            <div>
-                              <CircularProgress />
-                            </div>
-                          ) : (
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                width: "100%",
-                                justifyContent: "center",
-                                alignItems: "center",
-                              }}
-                            >
-                              {disc.id !== claimedDisc ? (
-                                <div>
-                                  {/* Check if the pickup deadline is in the past */}
-                                  {new Date(disc.pickupDeadline!) <
-                                    new Date() && (
+                              >
+                                {disc.id !== claimedDisc ? (
+                                  <div>
+                                    {/* Check if the pickup deadline is in the past */}
+                                    {new Date(disc.pickupDeadline!) <
+                                      new Date() && (
+                                      <button
+                                        className="inventory-button"
+                                        onClick={() =>
+                                          listForSale(
+                                            disc.id!.toString(),
+                                            course
+                                          )
+                                        }
+                                      >
+                                        List For Sale
+                                      </button>
+                                    )}
+
                                     <button
                                       className="inventory-button"
                                       onClick={() =>
-                                        listForSale(
-                                          disc.id!.toString(),
-                                          "Stafford Woods"
-                                        )
+                                        markAsClaimed(disc.id!.toString())
                                       }
+                                      style={{ marginLeft: "10px" }}
                                     >
-                                      List For Sale
+                                      Mark as Claimed
                                     </button>
-                                  )}
+                                  </div>
+                                ) : null}
+                              </Box>
+                            )}
 
-                                  <button
-                                    className="inventory-button"
-                                    onClick={() =>
-                                      markAsClaimed(disc.id!.toString())
-                                    }
-                                    style={{ marginLeft: "10px" }}
-                                  >
-                                    Mark as Claimed
-                                  </button>
-                                </div>
-                              ) : null}
-                            </Box>
-                          )}
-
-                          {showDeletePopup && (
-                            <DeleteConfirmationPopup
-                              disc={disc}
-                              open={showDeletePopup}
-                              onClose={handleClose}
-                              onConfirm={() => handleConfirmDelete(disc)}
-                            />
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
+                            {showDeletePopup && (
+                              <DeleteConfirmationPopup
+                                disc={disc}
+                                open={showDeletePopup}
+                                onClose={handleClose}
+                                onConfirm={() => handleConfirmDelete(disc)}
+                              />
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <BackToTopButton />
         </div>
       </div>
