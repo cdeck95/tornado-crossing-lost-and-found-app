@@ -36,8 +36,7 @@ function AdminPanel() {
   const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
   const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
   const course = process.env.REACT_APP_COURSE_NAME;
-  // const location = useLocation();
-  const location = window.location;
+  const location = useLocation();
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
 
@@ -187,15 +186,15 @@ function AdminPanel() {
                 Sign up
               </button>
               <button
-                onClick={() =>
+                onClick={() => {
                   login({
                     app_state: {
                       redirectTo: location
                         ? location.pathname + location.search
                         : null,
                     },
-                  })
-                }
+                  });
+                }}
                 type="button"
               >
                 Sign In
