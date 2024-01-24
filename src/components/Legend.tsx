@@ -6,15 +6,15 @@ function Legend() {
     <div className="legend">
       <div className="legend-item">
         <FontAwesomeIcon icon={faCircle} style={{ color: "red" }} />
-        <span>Claim Expired</span>
+        <span>Expired</span>
       </div>
       <div className="legend-item">
         <FontAwesomeIcon icon={faCircle} style={{ color: "orange" }} />
-        <span>New - Pending Owner Notification</span>
+        <span>New</span>
       </div>
       <div className="legend-item">
         <FontAwesomeIcon icon={faCircle} style={{ color: "yellow" }} />
-        <span>Unclaimed - Owner Notified</span>
+        <span>Unclaimed</span>
       </div>
     </div>
   );

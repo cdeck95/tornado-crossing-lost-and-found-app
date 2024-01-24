@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
+import { KindeProvider, useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,7 +13,20 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <KindeProvider
+        clientId="95a83eba55d9495db12c7af54b84b290"
+        domain="https://discrescuenetwork.kinde.com"
+        logoutUri={window.location.origin}
+        redirectUri={window.location.origin}
+        onRedirectCallback={(user, app_state) => {
+          console.log({ user, app_state });
+          // if (app_state?.redirectTo) {
+          //   window.location = app_state?.redirectTo;
+          // }
+        }}
+      >
+        <App />
+      </KindeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -29,12 +29,13 @@
 /* Styles for the table cells */
 .table-cell {
   /* border-bottom: 1px solid #ddd; */
-  padding: 8px;
+  padding: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: "Lato Light" !important;
   font-weight: normal;
+  margin: auto;
 }
 
 .past-deadline-row {
@@ -94,10 +95,10 @@
   }
 }
 
-p {
+/* p {
   margin-block-start: 0px;
   margin-block-end: 0px;
-}
+} */
 
 .inventory-button {
   display: inline-block;
@@ -170,6 +171,14 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.row-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
 }
@@ -272,4 +281,13 @@ button {
   border: 1px solid var(--primary-blue) !important;
   background-color: var(--secondary-blue) !important;
   border-radius: 30px !important;
+}
+
+.table-cell-text {
+  font-family: "Lato Light" !important;
+  font-weight: normal;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

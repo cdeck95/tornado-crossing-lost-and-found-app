@@ -503,32 +503,46 @@ function Inventory() {
                       <td className="table-cell">
                         {disc.pickupDeadline}
                         {new Date(disc.pickupDeadline!) < new Date() && (
-                          <Tooltip title="Claim Period Expired">
+                          <Tooltip title="Expired">
                             <IconButton>
                               <FontAwesomeIcon
                                 icon={faCircle}
-                                style={{ color: "red" }}
+                                style={{
+                                  color: "red",
+                                  width: "15px",
+                                  height: "15px",
+                                  margin: "auto",
+                                  padding: "0px",
+                                }}
                               />
                             </IconButton>
                           </Tooltip>
                         )}
                         {disc.status === DiscStateString.New && (
-                          <Tooltip title="New - Pending Owner Notification">
+                          <Tooltip title="New">
                             <IconButton>
                               <FontAwesomeIcon
                                 icon={faCircle}
-                                style={{ color: "orange" }}
+                                style={{
+                                  color: "orange",
+                                  width: "10px",
+                                  height: "10px",
+                                }}
                               />
                             </IconButton>
                           </Tooltip>
                         )}
                         {disc.status !== DiscStateString.New &&
                           new Date(disc.pickupDeadline!) >= new Date() && (
-                            <Tooltip title="Unclaimed - Owner Notified">
+                            <Tooltip title="Unclaimed">
                               <IconButton>
                                 <FontAwesomeIcon
                                   icon={faCircle}
-                                  style={{ color: "yellow" }}
+                                  style={{
+                                    color: "yellow",
+                                    width: "10px",
+                                    height: "10px",
+                                  }}
                                 />
                               </IconButton>
                             </Tooltip>
@@ -555,7 +569,7 @@ function Inventory() {
                                 {deleteFailureMessage}
                               </div>
                             )}
-                            <div className="row">
+                            <div className="row-right">
                               {editedDiscID === disc.id ? (
                                 <SaveOutlinedIcon
                                   sx={{

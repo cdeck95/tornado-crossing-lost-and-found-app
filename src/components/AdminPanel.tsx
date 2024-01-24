@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import EnterLostDisc from "./EnterLostDisc";
 import Inventory from "./Inventory";
@@ -28,15 +29,20 @@ import MenuButton from "@mui/joy/MenuButton";
 // import Menu from "@mui/joy/Menu";
 // import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 function AdminPanel() {
   const REACT_APP_ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
   const [activeTab, setActiveTab] = useState("enterLostDisc"); // Default active tab
   const [isPasswordEntered, setIsPasswordEntered] = useState(false); // Track whether the password is entered
   const course = process.env.REACT_APP_COURSE_NAME;
-
+  // const location = useLocation();
+  const location = window.location;
   const theme = useTheme();
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+
+  const { login, register, logout, user, isAuthenticated, isLoading } =
+    useKindeAuth();
 
   const hashPassword = (password: string) => {
     return CryptoJS.SHA256(password).toString();
@@ -94,6 +100,7 @@ function AdminPanel() {
     if (index === 3) {
       navigate("/");
     }
+    setAnchorEl(null);
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -162,6 +169,39 @@ function AdminPanel() {
               Public View
             </MenuItem>
           </Menu>
+          {isAuthenticated && user ? (
+            <div>
+              <div>
+                <h2>
+                  {user.given_name} {user.family_name}
+                </h2>
+                <p>{user.email}</p>
+              </div>
+              <button onClick={() => logout()} type="button">
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={() => register()} type="button">
+                Sign up
+              </button>
+              <button
+                onClick={() =>
+                  login({
+                    app_state: {
+                      redirectTo: location
+                        ? location.pathname + location.search
+                        : null,
+                    },
+                  })
+                }
+                type="button"
+              >
+                Sign In
+              </button>
+            </div>
+          )}
         </div>
       </header>
       {isPasswordEntered ? ( // Render secret content if the password is entered

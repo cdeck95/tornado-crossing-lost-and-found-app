@@ -18,9 +18,7 @@ import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 import ColorLogoWhite from "../Images/Color_Logo_White.png";
 import TextLogo from "../Images/Text_Logo.png";
 import MenuButton from "@mui/joy/MenuButton";
-// import Menu from "@mui/joy/Menu";
-// import MenuItem from "@mui/joy/MenuItem";
-// import Dropdown from "@mui/joy/Dropdown";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 function PublicHub() {
   const theme = useTheme();
@@ -28,7 +26,8 @@ function PublicHub() {
   // const [activeTab, setActiveTab] = useState("faq"); // Default active tab
 
   const course = process.env.REACT_APP_COURSE_NAME;
-
+  const { login, register, logout, user, isAuthenticated, isLoading } =
+    useKindeAuth();
   // const switchTab = (tabName: string) => {
   //   setActiveTab(tabName);
   // };
@@ -39,6 +38,7 @@ function PublicHub() {
     if (typeof index === "number") {
       setSelectedIndex(index);
     }
+    setAnchorEl(null);
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -92,6 +92,28 @@ function PublicHub() {
               Inventory
             </MenuItem>
           </Menu>
+          {/* {isAuthenticated && user ? (
+            <div>
+              <div>
+                <h2>
+                  {user.given_name} {user.family_name}
+                </h2>
+                <p>{user.email}</p>
+              </div>
+              <button onClick={() => logout()} type="button">
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={() => register()} type="button">
+                Sign up
+              </button>
+              <button onClick={() => login()} type="button">
+                Sign In
+              </button>
+            </div>
+          )} */}
         </div>
       </header>
       <main className="container">

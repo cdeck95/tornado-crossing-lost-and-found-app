@@ -1827,6 +1827,20 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@kinde-oss/kinde-auth-pkce-js@^3.0.28":
+  version "3.0.30"
+  resolved "https://registry.yarnpkg.com/@kinde-oss/kinde-auth-pkce-js/-/kinde-auth-pkce-js-3.0.30.tgz#4bd05b8c35416fbcc40f6d57cfa0d0c5d26bb571"
+  integrity sha512-X9BAt7BgBJMjmTP6rTwe1nrvMVFhIcbYCCiObluHSJxB/GQA2zhbISyzcggPjGGGZmNbiVXr5FVLAunS+qFsIg==
+  dependencies:
+    jwt-decode "^4.0.0"
+
+"@kinde-oss/kinde-auth-react@^3.0.24":
+  version "3.0.24"
+  resolved "https://registry.yarnpkg.com/@kinde-oss/kinde-auth-react/-/kinde-auth-react-3.0.24.tgz#2ad763451eed6d6a86e6280a5deb0297105ea9ad"
+  integrity sha512-oopu5xCaKtKLl5aFJvoHFFo+q4ia+6AyqTHkvD6k4pXK84wV912eSID/jAavXZiFb6p/qZ68pW3krVf91AgT7Q==
+  dependencies:
+    "@kinde-oss/kinde-auth-pkce-js" "^3.0.28"
+
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"
@@ -6964,6 +6978,11 @@ jws@^4.0.0:
   dependencies:
     jwa "^2.0.0"
     safe-buffer "^5.0.1"
+
+jwt-decode@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-4.0.0.tgz#2270352425fd413785b2faf11f6e755c5151bd4b"
+  integrity sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==
 
 keyv@^4.5.3:
   version "4.5.4"

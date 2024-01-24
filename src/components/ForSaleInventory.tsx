@@ -508,7 +508,7 @@ function ForSaleInventory() {
                               </div>
                             )}
                             {/* Display all fields related to the disc here */}
-                            <div className="row">
+                            <div className="row-right">
                               {editedDiscID === disc.id ? (
                                 <SaveOutlinedIcon
                                   sx={{

@@ -250,14 +250,14 @@ function PublicInventory() {
             width: isMobile ? "85%" : "700px",
           }}
         >
-          <IconButton
+          {/* <IconButton
             sx={{ p: "10px" }}
             aria-label="menu"
             onClick={handleClickPopover}
           >
             <FilterListOutlinedIcon />
           </IconButton>
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
           <InputBase
             sx={{ ml: 1, flex: 1, fontSize: "12px" }}
             placeholder="Search by your name, last 4 digits of phone number, or disc"
@@ -281,7 +281,7 @@ function PublicInventory() {
             <SearchIcon />
           </IconButton>
         </Paper>
-        <Popover
+        {/* <Popover
           id={idPopover}
           open={openPopover}
           anchorEl={anchorElPopover}
@@ -336,7 +336,7 @@ function PublicInventory() {
             />
           </Box>
         </Popover>
-        <Legend />
+        <Legend /> */}
       </div>
       <div className="container">
         <div className="table-container">
@@ -351,7 +351,7 @@ function PublicInventory() {
               <tr>
                 <th className="table-header" />
                 {renderColumnHeader("name", "Name")}
-                {renderColumnHeader("pickupDeadline", "Claim By")}
+                {renderColumnHeader("dateFound", "Date Found")}
                 {renderColumnHeader("disc", "Disc")}
               </tr>
             </thead>
@@ -377,40 +377,7 @@ function PublicInventory() {
                         ? maskFirstName(disc.name)
                         : "No Name"}
                     </td>
-                    <td className="table-cell">
-                      {disc.pickupDeadline}
-                      {new Date(disc.pickupDeadline!) < new Date() && (
-                        <Tooltip title="Claim Period Expired">
-                          <IconButton>
-                            <FontAwesomeIcon
-                              icon={faCircle}
-                              style={{ color: "red" }}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {disc.status === DiscStateString.New && (
-                        <Tooltip title="New - Pending Owner Notification">
-                          <IconButton>
-                            <FontAwesomeIcon
-                              icon={faCircle}
-                              style={{ color: "orange" }}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {disc.status !== DiscStateString.New &&
-                        new Date(disc.pickupDeadline!) >= new Date() && (
-                          <Tooltip title="Unclaimed - Owner Notified">
-                            <IconButton>
-                              <FontAwesomeIcon
-                                icon={faCircle}
-                                style={{ color: "yellow" }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                    </td>
+                    <td className="table-cell">{disc.dateFound}</td>
                     <td className="table-cell">{disc.disc}</td>
                   </tr>
                   {expandedRows.includes(disc.id!) && (
@@ -459,18 +426,18 @@ function PublicInventory() {
                             <strong>Date Texted: </strong>
                             {disc.dateTexted}
                           </p>
-                          <p className="detailed-text">
+                          {/* <p className="detailed-text">
                             <strong>Date Claimed: </strong>
                             {disc.dateClaimed}
-                          </p>
-                          <p className="detailed-text">
+                          </p> */}
+                          {/* <p className="detailed-text">
                             <strong>Status: </strong>
                             {disc.status}
-                          </p>
-                          <p className="detailed-text">
+                          </p> */}
+                          {/* <p className="detailed-text">
                             <strong>Pickup Deadline: </strong>
                             {disc.pickupDeadline}
-                          </p>
+                          </p> */}
                           <p className="detailed-text">
                             <strong>Comments: </strong>
                             {disc.comments}
