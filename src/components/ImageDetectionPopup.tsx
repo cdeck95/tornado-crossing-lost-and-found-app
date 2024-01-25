@@ -1,5 +1,5 @@
 // PopupComponent.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../styles/ImageDetectionPopup.css";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,6 +23,7 @@ const ImageDetectionPopup: React.FC<PopupProps> = ({
   prefillForm,
   categories,
 }) => {
+  const popupRef = useRef<HTMLDivElement>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editedText, setEditedText] = useState<string>("");
   const [isAnyCategorySelect, setIsAnyCategorySelect] =
@@ -43,6 +44,23 @@ const ImageDetectionPopup: React.FC<PopupProps> = ({
     setEditedText("");
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    console.log("click outside");
+    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      // Remove event listener on cleanup
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   useEffect(() => {
     // Check if any category is "SELECT"
     console.log(data);
@@ -52,10 +70,10 @@ const ImageDetectionPopup: React.FC<PopupProps> = ({
 
   return (
     <div className="popup-container">
-      <div className="popup-content">
-        <button className="close-button" onClick={onClose}>
+      <div className="popup-content" ref={popupRef}>
+        {/* <button className="close-button" onClick={onClose}>
           X
-        </button>
+        </button> */}
         <table>
           <thead>
             <tr>
@@ -68,7 +86,13 @@ const ImageDetectionPopup: React.FC<PopupProps> = ({
             {data.map((item, index) => (
               <tr key={index}>
                 <td>
-                  {index === editingIndex ? (
+                  <input
+                    type="text"
+                    value={item.text}
+                    onChange={(e) => onUpdateText(index, e.target.value)}
+                    className="editable-text-input"
+                  />
+                  {/* {index === editingIndex ? (
                     // Display input field for editing
                     <div>
                       <input
@@ -87,7 +111,7 @@ const ImageDetectionPopup: React.FC<PopupProps> = ({
                         onClick={() => startEditing(item.text, index)}
                       />
                     </div>
-                  )}
+                  )} */}
                 </td>
                 <td>
                   <select
@@ -115,12 +139,21 @@ const ImageDetectionPopup: React.FC<PopupProps> = ({
             ))}
           </tbody>
         </table>
-        <button
-          disabled={editingIndex != null || isAnyCategorySelect}
-          onClick={prefillForm}
-        >
-          Prefill Form
-        </button>
+        <div className="row-apart">
+          <p className="disclaimer">
+            Text is captured via our AI Integration. As the model is always
+            learning, you may experience wrong categories initially selected or
+            text that is not needed. You can delete these by hitting the delete
+            icon or simply click on the text you wish to edit.
+          </p>
+          <button
+            disabled={editingIndex != null || isAnyCategorySelect}
+            onClick={prefillForm}
+            className="button-submit"
+          >
+            Submit to Form
+          </button>
+        </div>
       </div>
     </div>
   );

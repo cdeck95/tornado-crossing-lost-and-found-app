@@ -1,48 +1,42 @@
 .circle-guide {
   border: 2px solid #fff; /* White border */
   border-radius: 50%; /* Makes the shape a circle */
-  width: 200px; /* Width of the circle */
-  height: 200px; /* Height of the circle */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center the circle */
   pointer-events: none; /* Allows the camera feed to be clicked through the circle */
+  width: 80%;
+  height: 80%;
+  box-sizing: border-box;
 }
 
 .webcam {
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
   width: 100%;
-  max-width: 100%;
   min-width: 225px;
   height: auto;
-  max-height: 100%;
   min-height: 225px;
   object-fit: cover;
+  border: 2px solid var(--primary-red);
   position: relative;
 }
 
 .button-blue {
-  width: 175px; /* Large square size */
-  height: 175px;
-  border-radius: 10px; /* Rounded corners */
-  margin: 10px;
-  padding: 10px !important;
-  font-size: 16px !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: #ffffff;
-  background: blue;
-  border: 1px solid #ffffff;
+  color: var(--primary-white);
+  background-color: var(--primary-blue);
+  border: 1px solid var(--border-primary-blue);
+  font-family: "Bebas Neue Light";
+  font-weight: 300;
 }
 
 .button-blue:hover,
 .button-blue:focus,
 .button-blue:active {
-  color: #006e52;
+  color: var(--primary-blue);
   background: #ffffff;
-  border: 1px solid blue;
+  border: 1px solid var(--primary-blue);
   cursor: pointer;
 }
 
@@ -84,6 +78,11 @@
     height: 125px;
     font-size: 0.85rem !important;
   }
+  .camera-component-container {
+    /* Adjust the size or padding based on your design */
+    max-width: 60%;
+    padding: 20px;
+  }
 }
 
 @media screen and (min-width: 601px) {
@@ -98,5 +97,28 @@
     width: 150px;
     height: 150px;
     font-size: 0.85rem !important;
+  }
+
+  .camera-component-container {
+    /* Adjust the size or padding based on your design */
+    max-width: 60%;
+    padding: 20px;
+  }
+}
+/* 
+/* Example media query for larger screens */
+@media (min-width: 768px) {
+  .camera-component-container {
+    /* Adjust the size or padding based on your design */
+    max-width: 55%;
+    padding: 20px;
+  }
+}
+
+/* Additional media queries can be added for different screen sizes */
+@media (min-width: 1024px) {
+  .camera-component-container {
+    max-width: 50%;
+    padding: 30px;
   }
 }

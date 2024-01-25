@@ -32,6 +32,18 @@ body {
   margin: auto;
 }
 
+button {
+  min-width: 125px;
+  min-height: 50px;
+  border-radius: 0px;
+  margin: 10px;
+  padding: 8px 6px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 @font-face {
   font-family: "Bebas Neue";
   src: url("../fonts/BebasNeue-Thin.eot");
@@ -337,6 +349,14 @@ tr {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.row-apart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
 }

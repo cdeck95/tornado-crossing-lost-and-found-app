@@ -1,4 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
 import "../styles/CameraComponent.css";
@@ -8,12 +16,14 @@ import "../styles/EnterLostDisc.css"; // Import the CSS file
 interface CameraComponentProps {
   onCapture: (imageData: string, side: string) => void;
   side: string;
+  setSide: Dispatch<SetStateAction<string>>;
   switchToManual: () => void;
 }
 
 const CameraComponent: React.FC<CameraComponentProps> = ({
   onCapture,
   side,
+  setSide,
   switchToManual,
 }) => {
   const isMobileDevice = () => {
@@ -22,12 +32,34 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
     );
   };
 
-  const videoConstraints = {
-    facingMode: isMobileDevice() ? { exact: "environment" } : "user",
+  const [videoConstraints, setVideoConstraints] =
+    useState<MediaTrackConstraints>({ facingMode: "environment" });
+  const [webcamAvailable, setWebcamAvailable] = useState(true);
+
+  useMemo(() => {
+    setVideoConstraints({
+      facingMode: isMobileDevice() ? { exact: "environment" } : "user",
+    });
+  }, []);
+
+  const handleUserMediaError = (error: any) => {
+    console.error("Webcam error:", error);
+    setWebcamAvailable(false);
   };
+
   const webcamRef = useRef<Webcam>(null); // Use a generic type for better type checking
   const intervalRef = useRef<number | null>(null);
   const [isDark, setIsDark] = useState(false); // State to track lighting condition
+
+  const toggleSide = () => {
+    console.log("Toggling side...");
+    if (side === "front") {
+      setSide("back");
+    } else {
+      setSide("front");
+    }
+    console.log("Side:", side);
+  };
 
   const capture = useCallback(() => {
     if (webcamRef.current) {
@@ -41,6 +73,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
         console.error("Webcam image is null");
         // You can also set some state here to show an error message to the user
       }
+      toggleSide();
     }
   }, [webcamRef, side]);
 
@@ -115,27 +148,40 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
   }, [videoConstraints]);
 
   return (
-    <div>
+    <div className="camera-component-container">
       <div style={{ position: "relative" }}>
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          className="webcam"
-          videoConstraints={videoConstraints}
-        />
-        <div className="circle-guide"></div>
-        {isDark && (
+        {webcamAvailable ? (
+          <div>
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              className="webcam"
+              videoConstraints={videoConstraints}
+              onUserMediaError={handleUserMediaError}
+            />
+            <div className="circle-guide" />
+            {isDark && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  color: "white",
+                }}
+              >
+                Please try to get better lighting.
+              </div>
+            )}
+          </div>
+        ) : (
           <div
-            style={{
-              position: "absolute",
-              top: "10px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              color: "white",
-            }}
+            className="no-webcam"
+            style={{ width: "100%", height: "100%", backgroundColor: "white" }}
           >
-            Please try to get better lighting.
+            {/* You can add any message or icon here to indicate that the webcam is not available */}
+            <p>No webcam available</p>
           </div>
         )}
       </div>
@@ -150,6 +196,17 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
         }}
       >
         <button
+          onClick={switchToManual}
+          className="button-done"
+          style={{
+            height: "50px",
+            width: "100%",
+          }}
+        >
+          Done Captures
+        </button>
+
+        <button
           onClick={capture}
           className="button-blue"
           style={{
@@ -157,17 +214,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
             width: "100%",
           }}
         >
-          Capture {side} photo
-        </button>
-        <button
-          onClick={switchToManual}
-          className="button"
-          style={{
-            height: "50px",
-            width: "100%",
-          }}
-        >
-          Done Captures
+          Capture {side}
         </button>
         {/* <button
           onClick={toggleSide}

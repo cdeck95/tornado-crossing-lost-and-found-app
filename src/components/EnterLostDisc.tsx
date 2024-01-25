@@ -6,7 +6,7 @@ import CameraRollOutlinedIcon from "@mui/icons-material/CameraRollOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import "../styles/EnterLostDisc.css"; // Import the CSS file
-// import { API_BASE_URL } from "../App";
+import { API_BASE_URL } from "../App";
 import { Typography } from "@mui/material";
 import CameraComponent from "./CameraComponent";
 import ImageDetectionPopup from "./ImageDetectionPopup";
@@ -44,7 +44,7 @@ function EnterLostDisc() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showCamera, setShowCamera] = useState(false);
   const [selection, setSelection] = useState("");
-  const [side, setSide] = useState<"front" | "back">("front");
+  const [side, setSide] = useState<string>("");
   const [frontImage, setFrontImage] = useState<string | null>(null);
   const [backImage, setBackImage] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -75,10 +75,6 @@ function EnterLostDisc() {
     if (side === "front") setSide("front");
     else setSide("back");
     setShowCamera(true);
-  };
-
-  const toggleSide = () => {
-    setSide((prevSide) => (prevSide === "front" ? "back" : "front"));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,61 +118,62 @@ function EnterLostDisc() {
     console.log(`Captured ${side} image:`, imageData);
     if (side === "front") {
       setFrontImage(imageData);
+      setSide("back");
     } else if (side === "back") {
       setBackImage(imageData);
+      setSide("front");
     }
 
-    //Diego -please do not interact wiht the API.
-    // try {
-    //   const response = await axios.post(`${API_BASE_URL}/detect-text`, {
-    //     imageBase64: imageData,
-    //   });
-    //   const data = response.data;
-    //   console.log("Data:", data);
+    try {
+      const response = await axios.post(`${API_BASE_URL}/detect-text`, {
+        imageBase64: imageData,
+      });
+      const data = response.data;
+      console.log("Data:", data);
 
-    //   if (!data || data.length === 0) {
-    //     // Handle no text detected
-    //     console.log("No text detected.");
-    //     setErrorMessage("No text detected.");
-    //     return;
-    //   }
+      if (!data || data.length === 0) {
+        // Handle no text detected
+        console.log("No text detected.");
+        setErrorMessage("No text detected.");
+        return;
+      }
 
-    //   // Map the categories
-    //   const mappedResponse = data.map(
-    //     (item: { text: any; category: string }) => ({
-    //       text: item.text,
-    //       category: mapToPredefinedCategory(item.category),
-    //     })
-    //   );
+      // Map the categories
+      const mappedResponse = data.map(
+        (item: { text: any; category: string }) => ({
+          text: item.text,
+          category: mapToPredefinedCategory(item.category),
+        })
+      );
 
-    //   console.log("Mapped response:", mappedResponse);
+      console.log("Mapped response:", mappedResponse);
 
-    //   setApiResponseData(mappedResponse);
-    //   setShowPopup(true); // Show popup when data is received
-    // } catch (error) {
-    //   console.error("Error processing image:", error);
+      setApiResponseData(mappedResponse);
+      setShowPopup(true); // Show popup when data is received
+    } catch (error) {
+      console.error("Error processing image:", error);
 
-    //   if (axios.isAxiosError(error)) {
-    //     const axiosError = error as AxiosError;
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
 
-    //     // Check if the error status is 500 and retry if within the maximum retry attempts
-    //     if (
-    //       axiosError.response?.status === 500 &&
-    //       retryCount < MAX_RETRY_ATTEMPTS
-    //     ) {
-    //       console.log(`Retrying API call (Attempt ${retryCount + 1})...`);
-    //       await new Promise<void>((resolve) => setTimeout(resolve, 1000)); // Wait for a moment before retrying
-    //       await handleImageCapture(imageData, side, retryCount + 1);
-    //     } else if (axiosError.response?.status === 204) {
-    //       // Handle no text detected
-    //       console.log("No text detected.");
-    //       setErrorMessage("No text detected.");
-    //     } else {
-    //       // Handle other errors or reach maximum retry attempts
-    //       console.error("Max retry attempts reached or non-retryable error.");
-    //     }
-    //   }
-    // }
+        // Check if the error status is 500 and retry if within the maximum retry attempts
+        if (
+          axiosError.response?.status === 500 &&
+          retryCount < MAX_RETRY_ATTEMPTS
+        ) {
+          console.log(`Retrying API call (Attempt ${retryCount + 1})...`);
+          await new Promise<void>((resolve) => setTimeout(resolve, 1000)); // Wait for a moment before retrying
+          await handleImageCapture(imageData, side, retryCount + 1);
+        } else if (axiosError.response?.status === 204) {
+          // Handle no text detected
+          console.log("No text detected.");
+          setErrorMessage("No text detected.");
+        } else {
+          // Handle other errors or reach maximum retry attempts
+          console.error("Max retry attempts reached or non-retryable error.");
+        }
+      }
+    }
   };
 
   const prefillForm = () => {
@@ -236,45 +233,44 @@ function EnterLostDisc() {
 
     setSuccessMessage(""); // Clear success message
     setErrorMessage(""); // Clear error message
-    // setIsLoading(true); // Set loading to true when the request is initiated
+    setIsLoading(true); // Set loading to true when the request is initiated
 
-    // const formData = new FormData();
-    // Object.entries(discData).forEach(([key, value]) => {
-    //   formData.append(key, value);
-    // });
-    // if (frontImage) formData.append("frontImage", frontImage);
-    // if (backImage) formData.append("backImage", backImage);
+    const formData = new FormData();
+    Object.entries(discData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    if (frontImage) formData.append("frontImage", frontImage);
+    if (backImage) formData.append("backImage", backImage);
 
-    // axios
-    //   .post(`${API_BASE_URL}/found-discs`, formData, {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   })
-    // axios
-    //   .post(`${API_BASE_URL}/found-discs`, discData)
-    //   .then((response) => {
-    //     console.log("Disc added:", response.data);
+    axios.post(`${API_BASE_URL}/found-discs`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    axios
+      .post(`${API_BASE_URL}/found-discs`, discData)
+      .then((response) => {
+        console.log("Disc added:", response.data);
 
-    //     // Set success message with the ID of the row from the DB
-    //     setSuccessMessage(`Disc added with ID ${response.data.id}`);
+        // Set success message with the ID of the row from the DB
+        setSuccessMessage(`Disc added with ID ${response.data.id}`);
 
-    //   // Clear the form and loading state
-    //   setDiscData({
-    //     course: course!,
-    //     name: "",
-    //     disc: "",
-    //     phoneNumber: "",
-    //     bin: discData.bin, //don't overwrite the bin number
-    //     comments: "",
-    //     dateFound: new Date().toISOString().split("T")[0],
-    //     color: "",
-    //     brand: discData.brand, //don't overwrite the brand
-    //   });
-    //   setIsLoading(false);
-    // })
-    // .catch((error) => {
-    //   console.error("Error adding disc:", error);
-    //   setIsLoading(false); // Clear loading state on error
-    // });
+        // Clear the form and loading state
+        setDiscData({
+          course: course!,
+          name: "",
+          disc: "",
+          phoneNumber: "",
+          bin: discData.bin, //don't overwrite the bin number
+          comments: "",
+          dateFound: new Date().toISOString().split("T")[0],
+          color: "",
+          brand: discData.brand, //don't overwrite the brand
+        });
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error adding disc:", error);
+        setIsLoading(false); // Clear loading state on error
+      });
   };
 
   const handleCameraButtonClick = () => {
@@ -293,14 +289,18 @@ function EnterLostDisc() {
       <h1 className="EnterLostDisc">ENTER LOST DISC</h1>
       <div className="button-container">
         <button
-          className={showCamera ? "button active" : "button button-red"}
+          className={
+            showCamera
+              ? "button-options active"
+              : "button-options button-options-red"
+          }
           onClick={handleCameraButtonClick}
         >
           <CameraRollOutlinedIcon className="button-icon-camera" />
           <span className="button-text">USE CAMERA</span>
         </button>
         <button
-          className="button button-black"
+          className="button-options button-options-black"
           onClick={handleManualButtonClick}
         >
           <CreateOutlinedIcon className="button-icon-pencil" />
@@ -308,47 +308,52 @@ function EnterLostDisc() {
         </button>
       </div>
 
-      {selection && (
-        <div className="image-placeholder-row">
-          {/* Front Image */}
-          <div
-            className="image-container"
-            onClick={() => handlePlaceholderClick("front")}
-          >
-            {frontImage ? (
-              <img src={frontImage} alt="Front" />
-            ) : (
-              <div className="image-placeholder">
-                <CameraAltIcon className="camera-icon" />
-                <span>Capture Front</span>
-              </div>
-            )}
-          </div>
+      <div className="use-camera-container">
+        {showCamera && (
+          <CameraComponent
+            onCapture={(imageData, side) => handleImageCapture(imageData, side)}
+            side={side}
+            setSide={setSide}
+            switchToManual={handleManualButtonClick}
+          />
+        )}
 
-          {/* Back Image */}
-          <div
-            className="image-container"
-            onClick={() => handlePlaceholderClick("back")}
-          >
-            {backImage ? (
-              <img src={backImage} alt="Back" />
-            ) : (
-              <div className="image-placeholder">
-                <CameraAltIcon className="camera-icon" />
-                <span>Capture Back</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+        {selection && (
+          <div className="image-placeholder-container">
+            {/* Front Image */}
+            <div
+              className="image-container"
+              onClick={() => handlePlaceholderClick("front")}
+            >
+              {frontImage ? (
+                <img src={frontImage} alt="Front" />
+              ) : (
+                <div className="image-placeholder">
+                  <CameraAltIcon className="camera-icon" />
+                  {/* <span>Capture</span> */}
+                </div>
+              )}
+            </div>
+            <div className="image-placeholder-label">Front</div>
 
-      {showCamera && (
-        <CameraComponent
-          onCapture={(imageData, side) => handleImageCapture(imageData, side)}
-          side={side}
-          switchToManual={handleManualButtonClick}
-        />
-      )}
+            {/* Back Image */}
+            <div
+              className="image-container"
+              onClick={() => handlePlaceholderClick("back")}
+            >
+              {backImage ? (
+                <img src={backImage} alt="Back" />
+              ) : (
+                <div className="image-placeholder">
+                  <CameraAltIcon className="camera-icon" />
+                  {/* <span>Capture Back</span> */}
+                </div>
+              )}
+            </div>
+            <div className="image-placeholder-label">Back</div>
+          </div>
+        )}
+      </div>
 
       {showPopup && (
         <ImageDetectionPopup
