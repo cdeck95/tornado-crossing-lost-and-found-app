@@ -17,12 +17,12 @@
   --table-seperator: #dcdcdc;
   height: 100dvh;
   width: 100dvw;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
 }
 
 body {
   /* font-family: "Bebas Neue", sans-serif; */
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
   overflow-x: hidden !important;
   height: 100%;
   width: 100%;
