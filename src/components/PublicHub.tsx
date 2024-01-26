@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import EnterLostDisc from "./EnterLostDisc";
-import Inventory from "./Inventory";
 import "../styles/App.css";
 import {
   Button,
@@ -17,7 +15,6 @@ import FAQ from "./FAQ";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 import ColorLogoWhite from "../Images/Color_Logo_White.png";
 import TextLogo from "../Images/Text_Logo.png";
-import MenuButton from "@mui/joy/MenuButton";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 function PublicHub() {

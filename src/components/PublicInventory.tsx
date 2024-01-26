@@ -9,7 +9,6 @@ import {
   faSquareCaretUp,
   faSquareCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
-import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
 import {
   Avatar,
   Box,
@@ -23,10 +22,6 @@ import {
   TextField,
   useMediaQuery,
 } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import EditDialog from "./EditDialog";
-import Legend from "./Legend";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";

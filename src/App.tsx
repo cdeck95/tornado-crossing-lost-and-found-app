@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import EnterLostDisc from "./components/EnterLostDisc";
-import Inventory from "./components/Inventory";
 import "./styles/App.css";
 import { Box, Button, ButtonGroup, Typography } from "@mui/material"; // Import Button and ButtonGroup from MUI
-import AdminPanel from "./components/AdminPanel";
 import PublicInventory from "./components/PublicHub";
 import PublicHub from "./components/PublicHub";
 
@@ -57,7 +54,6 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<PublicHub />} />
-        <Route path="/Admin" element={<AdminPanel />} />
       </Routes>
     </Box>
   );
