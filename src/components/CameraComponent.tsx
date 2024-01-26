@@ -168,7 +168,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
                   top: "10px",
                   left: "50%",
                   transform: "translateX(-50%)",
-                  color: "white",
+                  color: "var(--primary-white",
                 }}
               >
                 Please try to get better lighting.
@@ -178,7 +178,11 @@ const CameraComponent: React.FC<CameraComponentProps> = ({
         ) : (
           <div
             className="no-webcam"
-            style={{ width: "100%", height: "100%", backgroundColor: "white" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "var(--primary-white)",
+            }}
           >
             {/* You can add any message or icon here to indicate that the webcam is not available */}
             <p>No webcam available</p>
