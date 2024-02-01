@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "./styles/App.css";
 import { Box, Button, ButtonGroup, Typography } from "@mui/material"; // Import Button and ButtonGroup from MUI
 import PublicInventory from "./components/PublicHub";
@@ -54,6 +59,7 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<PublicHub />} />
+        <Route path="/admin/*" element={<Navigate to="/" replace />} />
       </Routes>
     </Box>
   );
