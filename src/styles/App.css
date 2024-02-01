@@ -15,6 +15,7 @@
   --primary-grey: #e3e3e3;
   --primary-green: #55de1f;
   --table-seperator: #dcdcdc;
+  --error-red: #ff0000;
   height: 100dvh;
   width: 100dvw;
 }

@@ -13,8 +13,9 @@ import {
 import PublicInventory from "./PublicInventory";
 import FAQ from "./FAQ";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
-import ColorLogoWhite from "../Images/Color_Logo_White.png";
-import TextLogo from "../Images/Text_Logo.png";
+import FullLogo from "../Images/DRNFNL.png";
+import LogoIcon from "../Images/DRNFNL_Icon.png";
+import TextLogo from "../Images/DRNFNL_Text.png";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 function PublicHub() {
@@ -52,7 +53,8 @@ function PublicHub() {
       <header className="App-header">
         <div className="Header-content">
           <div className="Logo-Container">
-            <img src={ColorLogoWhite} alt="DRN-Logo" className="logo" />
+            {/* <img src={FullLogo} alt="DRN-Logo" className="logo" /> */}
+            <img src={LogoIcon} alt="DRN-Logo" className="logo" />
             <img src={TextLogo} alt="DRN-Logo" className="logo-text" />
           </div>
           <Button
