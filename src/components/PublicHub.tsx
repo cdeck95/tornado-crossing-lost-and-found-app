@@ -13,9 +13,12 @@ import {
 import PublicInventory from "./PublicInventory";
 import FAQ from "./FAQ";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
-import FullLogo from "../Images/DRNFNL.png";
-import LogoIcon from "../Images/DRNFNL_Icon.png";
-import TextLogo from "../Images/DRNFNL_Text.png";
+import fullTransparentLogo1700 from "../Images/full_logo_transparent_1740x300.png";
+import fullTransparentLogoFullSized from "../Images/full_logo_transparent_fullsize.png";
+import iconLogoTransparent300 from "../Images/icon_logo_transparent_300x300.png";
+import iconLogoTransparentFullSized from "../Images/icon_logo_transparent_fullsize.png";
+import textLogoTransparent300 from "../Images/text_logo_transparent_1690x300.png";
+import textLogoTransparentFullSized from "../Images/text_logo_transparent_fullsize.png";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 function PublicHub() {
@@ -53,9 +56,11 @@ function PublicHub() {
       <header className="App-header">
         <div className="Header-content">
           <div className="Logo-Container">
-            {/* <img src={FullLogo} alt="DRN-Logo" className="logo" /> */}
-            <img src={LogoIcon} alt="DRN-Logo" className="logo" />
-            <img src={TextLogo} alt="DRN-Logo" className="logo-text" />
+            <img
+              src={fullTransparentLogo1700}
+              alt="DRN-Logo"
+              className="logo-text"
+            />
           </div>
           <Button
             id="basic-button"
