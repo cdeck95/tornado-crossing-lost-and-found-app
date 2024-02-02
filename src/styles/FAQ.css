@@ -14,13 +14,14 @@ h2 {
 }
 
 .faq-section {
-  border: 1px solid #ddd;
+  border: 1px solid var(--table-seperator);
   margin-bottom: 20px;
   border-radius: 5px;
   cursor: pointer;
   overflow: hidden;
   padding: 2%;
   text-align: left;
+  background-color: var(--primary-white);
 }
 
 .question {

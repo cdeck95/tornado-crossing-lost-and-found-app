@@ -5,6 +5,7 @@
   width: 95%;
   margin: auto;
   table-layout: fixed;
+  background-color: var(--primary-white);
 }
 
 /* Style for the inventory count display */

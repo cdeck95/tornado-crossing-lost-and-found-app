@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import "../styles/FAQ.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSquareCaretUp,
+  faSquareCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface FAQItem {
   question: string;
@@ -25,18 +30,18 @@ function FAQ() {
         <div className="faq-section" key={index}>
           <div
             className="question-container"
-            onClick={() => toggleAnswer(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleAnswer(index);
+            }}
           >
             <h2 className="question">{item.question}</h2>
-            {/* <button
-              className={`expand-button ${expanded[index] ? 'expanded' : 'collapsed'}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleAnswer(index);
-              }}
-            >
-              {expanded[index] ? '▲' : '▼'}
-            </button> */}
+
+            {expanded[index] ? (
+              <FontAwesomeIcon icon={faSquareCaretUp} className="icon" />
+            ) : (
+              <FontAwesomeIcon icon={faSquareCaretDown} className="icon" />
+            )}
           </div>
           {expanded[index] && <p className="answer">{item.answer}</p>}
         </div>
