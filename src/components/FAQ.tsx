@@ -72,10 +72,9 @@ const FAQData: FAQItem[] = [
       "To check if your disc is in the inventory, navigate to the app's inventory page. You can search for your disc by name, course, or other identifying information. If your disc has been found and reported by an administrator, it will appear in the search results.",
   },
   {
-    question:
-      "What does the pickup deadline mean? Will I lose my ability to claim my disc?",
+    question: "How long do I have to claim my disc?",
     answer:
-      'The pickup deadline is the date by which you should retrieve your disc from the inventory. After this date, the disc may be marked as "For Sale" and you may lose the ability to claim it. It\'s essential to check the pickup deadline for your disc and take action accordingly.',
+      'You must claim your disc within 120 days of the "date found". After this date, the disc may be marked as "For Sale" and you may lose the ability to claim it. It\'s essential to take action immediately to avoid this situation if you wish to claim your disc.',
   },
   {
     question: "How do I pick up my disc?",
