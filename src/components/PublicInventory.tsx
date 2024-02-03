@@ -42,7 +42,7 @@ function PublicInventory() {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const isLarge = useMediaQuery(theme.breakpoints.down("xl"));
-  const [sortOption, setSortOption] = useState<keyof Disc>("pickupDeadline"); // Set initial sort option
+  const [sortOption, setSortOption] = useState<keyof Disc>("claimBy"); // Set initial sort option
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc"); // Set initial sort direction to DESC
   const course = process.env.REACT_APP_COURSE_NAME;
 
@@ -128,9 +128,7 @@ function PublicInventory() {
           dateFound: convertToEST(disc.dateFound),
           dateTexted: disc.dateTexted ? convertToEST(disc.dateTexted) : null,
           dateClaimed: disc.dateClaimed ? convertToEST(disc.dateClaimed) : null,
-          pickupDeadline: disc.pickupDeadline
-            ? convertToEST(disc.pickupDeadline)
-            : null,
+          claimBy: disc.claimBy ? convertToEST(disc.claimBy) : null,
         }));
         //console.log('Inventory:', convertedInventory);
 
@@ -165,13 +163,13 @@ function PublicInventory() {
 
           // Check for Overdue
           if (isOverdueFilter) {
-            return isMatch && new Date(disc.pickupDeadline!) < new Date();
+            return isMatch && new Date(disc.claimBy!) < new Date();
           }
 
           // Check for Unclaimed
           if (isUnclaimedFilter) {
             const isNotNew = disc.status !== DiscStateString.New;
-            const isNotOverdue = new Date(disc.pickupDeadline!) >= new Date();
+            const isNotOverdue = new Date(disc.claimBy!) >= new Date();
             return isMatch && isNotNew && isNotOverdue;
           }
 
@@ -430,8 +428,8 @@ function PublicInventory() {
                             {disc.status}
                           </p> */}
                           {/* <p className="detailed-text">
-                            <strong>Pickup Deadline: </strong>
-                            {disc.pickupDeadline}
+                            <strong>Claim By: </strong>
+                            {disc.claimBy}
                           </p> */}
                           <p className="detailed-text">
                             <strong>Comments: </strong>

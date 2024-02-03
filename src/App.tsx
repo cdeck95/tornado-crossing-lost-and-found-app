@@ -24,7 +24,7 @@ export interface Disc {
   status: DiscStateString;
   comments?: string | null;
   color: string;
-  pickupDeadline?: string | null;
+  claimBy?: string | null;
   brand?: string | null;
   dateSold?: string | null;
 }
