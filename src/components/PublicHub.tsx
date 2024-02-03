@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Divider,
 } from "@mui/material"; // Import Button and ButtonGroup from MUI
 import PublicInventory from "./PublicInventory";
 import FAQ from "./FAQ";
@@ -43,6 +44,10 @@ function PublicHub() {
       setSelectedIndex(index);
     }
     setAnchorEl(null);
+  };
+
+  const adminLogin = () => {
+    window.location.href = "https://admin.discrescuenetwork.com";
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -109,6 +114,16 @@ function PublicHub() {
           >
             Inventory
           </MenuItem>
+          <Divider />
+          <MenuItem
+            {...(selectedIndex === 2 && {
+              selected: true,
+              variant: "soft",
+            })}
+            onClick={() => adminLogin()}
+          >
+            Course Login
+          </MenuItem>
         </Menu>
         {/* {isAuthenticated && user ? (
             <div>
@@ -134,7 +149,7 @@ function PublicHub() {
           )} */}
       </header>
       <main className="container">
-        <h1 className="header">{course} L & F</h1>
+        {/* <h1 className="header">{course} L & F</h1> */}
         {selectedIndex === 0 && <FAQ />}
         {selectedIndex === 1 && <PublicInventory />}
       </main>

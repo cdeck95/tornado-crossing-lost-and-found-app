@@ -232,6 +232,7 @@ function PublicInventory() {
 
   return (
     <div className="page-container">
+      <h1 className="header">{course} L & F</h1>
       <div className="col-center">
         <Paper
           component="form"

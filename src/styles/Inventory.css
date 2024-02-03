@@ -23,7 +23,7 @@
   border-bottom: 1px solid var(--table-seperator);
   font-weight: normal;
   padding: 8px;
-  font-family: "Lato Regular";
+  font-family: "Lato", sans-serif;
   width: 100%;
 }
 
@@ -34,8 +34,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "Lato Light" !important;
-  font-weight: normal;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
   margin: auto;
 }
 
@@ -50,7 +50,7 @@
 .page-container {
   margin: auto;
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: 1300px;
   display: flex;
   flex-direction: column;
@@ -289,8 +289,8 @@ button {
 }
 
 .table-cell-text {
-  font-family: "Lato Light" !important;
-  font-weight: normal;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
   margin: auto;
   display: flex;
   align-items: center;

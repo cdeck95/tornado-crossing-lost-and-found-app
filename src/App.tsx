@@ -9,6 +9,7 @@ import "./styles/App.css";
 import { Box, Button, ButtonGroup, Typography } from "@mui/material"; // Import Button and ButtonGroup from MUI
 import PublicInventory from "./components/PublicHub";
 import PublicHub from "./components/PublicHub";
+import "./styles/App.css";
 
 // Define a Disc interface
 export interface Disc {
@@ -51,8 +52,8 @@ function App() {
   return (
     <Box
       sx={{
-        height: "100%",
-        width: "100%",
+        height: "auto",
+        width: "auto",
         display: "flex",
         flexDirection: "column",
       }}
@@ -61,6 +62,7 @@ function App() {
         <Route path="/" element={<PublicHub />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <p className="copywrite">Copyright 2024 Disc Rescue Network LLC</p>
     </Box>
   );
 }

@@ -1,9 +1,9 @@
 .faq-page {
   max-width: 800px;
+  width: 80%;
   margin: 0 auto;
-  padding: 20px;
   font-family: Arial, sans-serif;
-  height: 100%;
+  height: auto;
 }
 
 h2 {
@@ -22,6 +22,7 @@ h2 {
   padding: 2%;
   text-align: left;
   background-color: var(--primary-white);
+  filter: drop-shadow(var(--primary-black) 0rem 2px rgba(0, 0, 0, 0.4));
 }
 
 .question {
