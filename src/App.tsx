@@ -46,7 +46,7 @@ export enum DiscStateString {
 //export const API_BASE_URL = "https://api.discrescuenetwork.com"; //production URL
 //export const API_BASE_URL = "http://127.0.0.1:3001"; // local testing
 //export const API_BASE_URL = `https://api-drn-env.eba-6jyxgrtu.us-east-1.elasticbeanstalk.com`;
-export const API_BASE_URL = `https://lost-and-found-api-gl8z.onrender.com/`;
+export const API_BASE_URL = `https://lost-and-found-api-gl8z.onrender.com`;
 
 function App() {
   const course = process.env.REACT_APP_COURSE_NAME;
