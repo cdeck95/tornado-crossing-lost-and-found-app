@@ -42,8 +42,8 @@ function PublicInventory() {
   const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
   const isMediumLarge = useMediaQuery(theme.breakpoints.down("lg"));
   const isLarge = useMediaQuery(theme.breakpoints.down("xl"));
-  const [sortOption, setSortOption] = useState<keyof Disc>("claimBy"); // Set initial sort option
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc"); // Set initial sort direction to DESC
+  const [sortOption, setSortOption] = useState<keyof Disc>("dateFound"); // Set initial sort option
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc"); // Set initial sort direction to DESC
   const course = process.env.REACT_APP_COURSE_NAME;
 
   const [expandedRows, setExpandedRows] = useState<RowId[]>([]);
@@ -107,6 +107,13 @@ function PublicInventory() {
     //return dateEST.toFormat('yyyy-MM-dd');
     return dateUTC.toFormat("yyyy-MM-dd");
   };
+
+  // const convertToEST = (httpTimestamp: string) => {
+  //   const dateUTC = DateTime.fromHTTP(httpTimestamp, { zone: "utc" });
+
+  //   // Format the date to display only the date (without time)
+  //   return dateUTC.toFormat("yyyy-MM-dd");
+  // };
 
   function maskPhoneNumber(phoneNumber: string): string {
     const last4Digits = phoneNumber.slice(-4);
