@@ -99,21 +99,21 @@ function PublicInventory() {
     }
   };
 
-  const convertToEST = (utcTimestamp: string) => {
-    const dateUTC = DateTime.fromISO(utcTimestamp, { zone: "utc" });
-    // const dateEST = dateUTC.setZone('America/New_York');
-
-    // Format the date to display only the date (without time)
-    //return dateEST.toFormat('yyyy-MM-dd');
-    return dateUTC.toFormat("yyyy-MM-dd");
-  };
-
-  // const convertToEST = (httpTimestamp: string) => {
-  //   const dateUTC = DateTime.fromHTTP(httpTimestamp, { zone: "utc" });
+  // const convertToEST = (utcTimestamp: string) => {
+  //   const dateUTC = DateTime.fromISO(utcTimestamp, { zone: "utc" });
+  //   // const dateEST = dateUTC.setZone('America/New_York');
 
   //   // Format the date to display only the date (without time)
+  //   //return dateEST.toFormat('yyyy-MM-dd');
   //   return dateUTC.toFormat("yyyy-MM-dd");
   // };
+
+  const convertToEST = (httpTimestamp: string) => {
+    const dateUTC = DateTime.fromHTTP(httpTimestamp, { zone: "utc" });
+
+    // Format the date to display only the date (without time)
+    return dateUTC.toFormat("yyyy-MM-dd");
+  };
 
   function maskPhoneNumber(phoneNumber: string): string {
     const last4Digits = phoneNumber.slice(-4);
