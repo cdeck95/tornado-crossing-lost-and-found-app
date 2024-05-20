@@ -296,3 +296,11 @@ button {
   align-items: center;
   justify-content: center;
 }
+
+.blue-italics {
+  font-style: italic;
+  color: var(--primary-blue);
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+}

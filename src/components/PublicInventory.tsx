@@ -31,7 +31,12 @@ import BackToTopButton from "./BackToTopButton";
 // Define a type for row IDs, assuming it's a number
 type RowId = number;
 
-function PublicInventory() {
+interface InventoryProps {
+  setSelectedIndex: (tabName: number) => void;
+}
+
+function PublicInventory(props: InventoryProps) {
+  const { setSelectedIndex } = props;
   const [inventory, setInventory] = useState<Disc[]>([]); // Provide the type 'Disc[]'
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredInventory, setFilteredInventory] = useState(inventory); // Initialize with inventory data
@@ -237,6 +242,10 @@ function PublicInventory() {
     );
   };
 
+  const openFAQ = () => {
+    setSelectedIndex(0);
+  };
+
   return (
     <div className="page-container">
       <h1 className="header">{course} L & F</h1>
@@ -341,6 +350,9 @@ function PublicInventory() {
       </div>
       <div className="container">
         <div className="table-container">
+          <button className="blue-italics" onClick={openFAQ}>
+            How do I claim my disc?
+          </button>
           <table className="inventory-table">
             <colgroup>
               <col style={{ width: "30px" }} />

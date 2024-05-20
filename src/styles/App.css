@@ -458,7 +458,10 @@ tr {
   /* overflow: auto !important; */
   height: auto;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   margin-top: 1rem;
+  gap: 0.5rem;
 }
 
 .detailed-text {
