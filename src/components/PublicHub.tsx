@@ -37,7 +37,7 @@ function PublicHub() {
   //   setActiveTab(tabName);
   // };
 
-  const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
 
   const createHandleClose = (index: number) => () => {
     if (typeof index === "number") {
