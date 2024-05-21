@@ -10,6 +10,7 @@ import { Box, Button, ButtonGroup, Typography } from "@mui/material"; // Import 
 import PublicInventory from "./components/PublicHub";
 import PublicHub from "./components/PublicHub";
 import "./styles/App.css";
+import { Analytics } from "@vercel/analytics/react";
 
 // Define a Disc interface
 export interface Disc {
@@ -58,6 +59,7 @@ function App() {
         flexDirection: "column",
       }}
     >
+      <Analytics />
       <Routes>
         <Route path="/" element={<PublicHub />} />
         <Route path="*" element={<Navigate to="/" replace />} />
