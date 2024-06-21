@@ -8,38 +8,27 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@google-cloud/vision": "^4.0.2",
     "@kinde-oss/kinde-auth-react": "^3.0.24",
     "@mui/icons-material": "^5.14.11",
-    "@mui/joy": "^5.0.0-beta.23",
     "@mui/material": "^5.14.11",
-    "@netlify/functions": "^2.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/express": "^4.17.18",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.55",
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
     "@vercel/analytics": "^1.2.2",
     "axios": "^1.5.1",
-    "cors": "^2.8.5",
-    "crypto-js": "^4.2.0",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "js-cookie": "^3.0.5",
+    "eslint-config-react-app": "^7.0.1",
     "luxon": "^3.4.3",
     "mysql2": "^3.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1",
-    "react-simple-pull-to-refresh": "^1.3.3",
-    "react-webcam": "^7.2.0",
-    "serverless-http": "^3.2.0",
     "typescript": "^5.3.3",
     "web-vitals": "^2.1.4"
+  },
+  "resolutions": {
+    "ws": "^8.17.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -66,13 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.1",
-    "@types/js-cookie": "^3.0.6",
-    "@types/luxon": "^3.3.2",
-    "css-loader": "^6.8.1",
-    "prettier": "^3.1.1",
-    "style-loader": "^3.3.3",
-    "ts-loader": "^9.5.1"
+    "@types/luxon": "^3.3.2"
   },
   "description": "My drn project"
 }
