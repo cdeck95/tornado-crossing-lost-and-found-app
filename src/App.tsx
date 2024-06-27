@@ -18,8 +18,8 @@ export interface Disc {
   course: string;
   name: string;
   disc: string;
-  phoneNumber: string;
-  bin: string;
+  phoneNumber: string | null;
+  bin: string | null;
   dateFound: string;
   dateTexted?: string | null;
   dateClaimed?: string | null;
