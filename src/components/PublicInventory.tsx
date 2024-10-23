@@ -163,14 +163,18 @@ function PublicInventory(props: InventoryProps) {
         const filteredInventory = sortedInventory.filter((disc: Disc) => {
           const isMatch =
             (disc.phoneNumber && disc.phoneNumber.includes(searchQuery)) ||
-            disc.disc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            disc.MoldName.toLowerCase().includes(searchQuery.toLowerCase()) ||
             disc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            disc.brand?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            disc.BrandName.toLowerCase().includes(searchQuery.toLowerCase()) ||
             disc.comments?.toLowerCase().includes(searchQuery.toLowerCase());
 
           // Check for New status
           if (isNewFilter) {
-            return isMatch && disc.status === DiscStateString.New;
+            return (
+              isMatch &&
+              disc.status === DiscStateString.Unclaimed &&
+              disc.dateTexted === null
+            );
           }
 
           // Check for Overdue
@@ -180,7 +184,9 @@ function PublicInventory(props: InventoryProps) {
 
           // Check for Unclaimed
           if (isUnclaimedFilter) {
-            const isNotNew = disc.status !== DiscStateString.New;
+            const isNotNew =
+              disc.status !== DiscStateString.Unclaimed &&
+              disc.dateTexted !== null;
             const isNotOverdue = new Date(disc.claimBy!) >= new Date();
             return isMatch && isNotNew && isNotOverdue;
           }
@@ -365,7 +371,7 @@ function PublicInventory(props: InventoryProps) {
                 <th className="table-header" />
                 {renderColumnHeader("name", "Name")}
                 {renderColumnHeader("dateFound", "Date Found")}
-                {renderColumnHeader("disc", "Disc")}
+                {renderColumnHeader("MoldName", "Disc")}
               </tr>
             </thead>
             <tbody>
@@ -391,7 +397,7 @@ function PublicInventory(props: InventoryProps) {
                         : "No Name"}
                     </td>
                     <td className="table-cell">{disc.dateFound}</td>
-                    <td className="table-cell">{disc.disc}</td>
+                    <td className="table-cell">{disc.MoldName}</td>
                   </tr>
                   {expandedRows.includes(disc.id!) && (
                     <tr>
@@ -413,17 +419,18 @@ function PublicInventory(props: InventoryProps) {
                           </p>
                           <p className="detailed-text">
                             <strong>Phone Number: </strong>
-                            {disc.phoneNumber === null
+                            {disc.phoneNumber === null ||
+                            disc.phoneNumber === undefined
                               ? "No Phone Number"
                               : maskPhoneNumber(disc.phoneNumber)}
                           </p>
                           <p className="detailed-text">
                             <strong>Brand: </strong>
-                            {disc.brand}
+                            {disc.BrandName}
                           </p>
                           <p className="detailed-text">
                             <strong>Disc: </strong>
-                            {disc.disc}
+                            {disc.MoldName}
                           </p>
                           <p className="detailed-text">
                             <strong>Color: </strong>

@@ -14,24 +14,36 @@ import { Analytics } from "@vercel/analytics/react";
 
 // Define a Disc interface
 export interface Disc {
-  id?: number;
-  course: string;
-  name: string;
-  disc: string;
-  phoneNumber: string | null;
-  bin: string | null;
-  dateFound: string;
-  dateTexted?: string | null;
-  dateClaimed?: string | null;
-  status: DiscStateString;
-  comments?: string | null;
+  id: number;
+  BrandID: number;
+  BrandName: string;
+  MoldID: number;
+  MoldName: string;
+  PlasticType?: string | null;
+  bin?: string | null;
+  bottomImage?: string | null;
+  category?: string | null;
   color: string;
+  comments?: string | null;
+  course: string;
   claimBy?: string | null;
-  brand?: string | null;
+  dateClaimed?: string | null;
+  dateFound: string;
+  dateOfReminderText?: string | null;
   dateSold?: string | null;
+  dateTexted?: string | null;
+  deleted: number;
+  discId: number;
+  name: string;
+  orgCode: string;
+  phoneNumber?: string | null;
+  status: DiscStateString;
+  subcategory?: string | null;
+  topImage?: string | null;
 }
+
+// Update enum if needed based on the response
 export enum DiscStateString {
-  New = "NEW",
   Unclaimed = "UNCLAIMED",
   PendingDropoff = "PENDING_DROPOFF",
   PendingStorePickup = "PENDING_STORE_PICKUP",
@@ -45,7 +57,7 @@ export enum DiscStateString {
 }
 
 export const API_BASE_URL = "https://api.discrescuenetwork.com"; //production URL
-//export const API_BASE_URL = "http://127.0.0.1:3001"; // local testing
+//export const API_BASE_URL = "http://127.0.0.1:5000"; // local testing
 
 function App() {
   const course = process.env.REACT_APP_COURSE_NAME;
